@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog — Ayşenur Şahin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,300;1,9..144,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/responsive.css">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
+</head>
+<body>
+<div class="page-loader"><div class="loader-logo">AŞ</div><div class="loader-bar-wrap"><div class="loader-bar"></div></div></div>
+<div class="scroll-progress"></div>
+<div class="cursor"></div><div class="cursor-follower"></div>
+<div class="grain"></div>
+
+<nav id="nav">
+  <a href="../index.html" class="logo">AŞ</a>
+  <div class="nav-links">
+    <a href="../index.html">Ana Sayfa</a>
+    <a href="about.html">Hakkında</a>
+    <a href="projeler.html">Projeler</a>
+    <a href="blog.html" class="active">Blog</a>
+    <a href="contact.html">İletişim</a>
+  </div>
+  <div class="nav-right">
+    <div class="nav-auth-links">
+      <a href="login.html">Giriş Yap</a>
+      <a href="register.html" class="register-btn">Kayıt Ol</a>
+    </div>
+    <a href="contact.html" class="nav-contact-btn">İletişime Geç</a>
+    <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="../index.html"><i data-lucide="home" width="15" height="15"></i> Ana Sayfa</a>
+  <a href="about.html"><i data-lucide="user" width="15" height="15"></i> Hakkında</a>
+  <a href="projeler.html"><i data-lucide="code-2" width="15" height="15"></i> Projeler</a>
+  <a href="blog.html"><i data-lucide="file-text" width="15" height="15"></i> Blog</a>
+  <a href="contact.html"><i data-lucide="mail" width="15" height="15"></i> İletişim</a>
+</div>
+
+<div class="page-hero">
+  <div class="page-hero-glow"></div>
+  <div class="container">
+    <div class="page-hero-line reveal"><span class="eyebrow-line"></span><span>Yazılarım</span></div>
+    <h1 class="reveal d1">Blog<em>.</em></h1>
+    <p class="page-hero-desc reveal d2">Öğrendiklerimi, deneyimlerimi ve düşüncelerimi paylaştığım yer.</p>
+  </div>
+</div>
+
+<section style="padding:0 0 80px;background:var(--bg);">
+  <div class="container">
+    <div class="blog-grid">
+
+      <div class="blog-card reveal">
+        <div class="blog-card-cover" style="background:linear-gradient(135deg,#120a2e,#3b1f6e);"><i data-lucide="book-open" width="40" height="40" style="color:var(--v300);position:relative;z-index:1;"></i></div>
+        <div class="blog-card-body">
+          <div class="blog-card-tag">Java · Backend</div>
+          <div class="blog-card-title">Java'da Spring Boot ile İlk API'm</div>
+          <div class="blog-card-excerpt">Spring Boot kullanarak sıfırdan bir REST API nasıl geliştirilir? Controller, Service ve Repository katmanlarını, dependency injection'ı ve endpoint tanımlamayı adım adım anlattım.</div>
+          <div class="blog-card-footer">
+            <span>Mar 2026</span>
+            <span>5 dk okuma</span>
+          </div>
+          <div class="blog-card-actions">
+            <a href="#" class="blog-read-more">Devamını Oku <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+            <div class="blog-card-rating" data-blog-key="blog-spring">
+              <span class="blog-star">★</span><span class="blog-star">★</span><span class="blog-star">★</span><span class="blog-star">★</span><span class="blog-star">★</span>
+              <span class="blog-star-label">Puan ver</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="blog-card reveal d1">
+        <div class="blog-card-cover" style="background:linear-gradient(135deg,#0d1b2a,#1b4332);"><i data-lucide="globe" width="40" height="40" style="color:var(--teal);position:relative;z-index:1;"></i></div>
+        <div class="blog-card-body">
+          <div class="blog-card-tag">CSS · Tasarım</div>
+          <div class="blog-card-title">CSS Grid ile Modern Layouts</div>
+          <div class="blog-card-excerpt">CSS Grid'in gücünü keşfederken öğrendiklerimi paylaşıyorum. grid-template-areas, auto-fit, minmax gibi özellikleri gerçek örneklerle inceliyorum.</div>
+          <div class="blog-card-footer">
+            <span>Şub 2026</span>
+            <span>4 dk okuma</span>
+          </div>
+          <div class="blog-card-actions">
+            <a href="#" class="blog-read-more">Devamını Oku <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+            <div class="blog-card-rating" data-blog-key="blog-css">
+              <span class="blog-star">★</span><span class="blog-star">★</span><span class="blog-star">★</span><span class="blog-star">★</span><span class="blog-star">★</span>
+              <span class="blog-star-label">Puan ver</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="blog-card reveal d2">
+        <div class="blog-card-cover" style="background:linear-gradient(135deg,#1a0a2e,#4a1b8a);"><i data-lucide="wrench" width="40" height="40" style="color:var(--crimson);position:relative;z-index:1;"></i></div>
+        <div class="blog-card-body">
+          <div class="blog-card-tag">PHP · Veritabanı</div>
+          <div class="blog-card-title">SQLite ile Hızlı Prototipleme</div>
+          <div class="blog-card-excerpt">Büyük projeler için MySQL, küçük projeler için SQLite. Kurulum gerektirmeyen SQLite'ı PHP ile nasıl kullandığımı, avantajlarını ve dezavantajlarını anlattım.</div>
+          <div class="blog-card-footer">
+            <span>Oca 2026</span>
+            <span>6 dk okuma</span>
+          </div>
+          <div class="blog-card-actions">
+            <a href="#" class="blog-read-more">Devamını Oku <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+            <div class="blog-card-rating" data-blog-key="blog-sqlite">
+              <span class="blog-star">★</span><span class="blog-star">★</span><span class="blog-star">★</span><span class="blog-star">★</span><span class="blog-star">★</span>
+              <span class="blog-star-label">Puan ver</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="blog-card reveal d1">
+        <div class="blog-card-cover" style="background:linear-gradient(135deg,#0d2818,#1b5e20);"><i data-lucide="zap" width="40" height="40" style="color:var(--gold);position:relative;z-index:1;"></i></div>
+        <div class="blog-card-body">
+          <div class="blog-card-tag">JavaScript · Performance</div>
+          <div class="blog-card-title">Async/Await ile Temiz Kod</div>
+          <div class="blog-card-excerpt">Callback cehenneminden kurtulmak için async/await kullanımını örneklerle inceledim. Promise zincirlerini nasıl sadeleştireceğinizi ve hata yönetimini nasıl yapacağınızı anlattım.</div>
+          <div class="blog-card-footer">
+            <span>Ara 2025</span>
+            <span>3 dk okuma</span>
+          </div>
+          <div class="blog-card-actions">
+            <a href="#" class="blog-read-more">Devamını Oku <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+            <div class="blog-card-rating" data-blog-key="blog-async">
+              <span class="blog-star">★</span><span class="blog-star">★</span><span class="blog-star">★</span><span class="blog-star">★</span><span class="blog-star">★</span>
+              <span class="blog-star-label">Puan ver</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="blog-card reveal d2">
+        <div class="blog-card-cover" style="background:linear-gradient(135deg,#1c1c1c,#2d2d2d);"><i data-lucide="target" width="40" height="40" style="color:var(--rose);position:relative;z-index:1;"></i></div>
+        <div class="blog-card-body">
+          <div class="blog-card-tag">Kariyer · Öğrenci</div>
+          <div class="blog-card-title">Öğrenciyken Portfolyo Oluşturma</div>
+          <div class="blog-card-excerpt">İş başvurularında öne çıkmak için portfolyo sitenizi nasıl hazırlarsınız? Hangi projeleri ekleyin, nasıl sunun, işverenler ne arar gibi soruları yanıtladım.</div>
+          <div class="blog-card-footer">
+            <span>Kas 2025</span>
+            <span>7 dk okuma</span>
+          </div>
+          <div class="blog-card-actions">
+            <a href="#" class="blog-read-more">Devamını Oku <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+            <div class="blog-card-rating" data-blog-key="blog-portfolyo">
+              <span class="blog-star">★</span><span class="blog-star">★</span><span class="blog-star">★</span><span class="blog-star">★</span><span class="blog-star">★</span>
+              <span class="blog-star-label">Puan ver</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="blog-card reveal d3">
+        <div class="blog-card-cover" style="background:linear-gradient(135deg,#1a0808,#4a1010);"><i data-lucide="shield" width="40" height="40" style="color:var(--blue);position:relative;z-index:1;"></i></div>
+        <div class="blog-card-body">
+          <div class="blog-card-tag">Güvenlik · PHP</div>
+          <div class="blog-card-title">PHP'de Temel Güvenlik Pratikleri</div>
+          <div class="blog-card-excerpt">SQL injection, XSS ve CSRF saldırılarından nasıl korunulur? Prepared statement kullanımı, input sanitize etme ve token doğrulamayı gerçek kod örnekleriyle anlattım.</div>
+          <div class="blog-card-footer">
+            <span>Eki 2025</span>
+            <span>8 dk okuma</span>
+          </div>
+          <div class="blog-card-actions">
+            <a href="#" class="blog-read-more">Devamını Oku <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+            <div class="blog-card-rating" data-blog-key="blog-security">
+              <span class="blog-star">★</span><span class="blog-star">★</span><span class="blog-star">★</span><span class="blog-star">★</span><span class="blog-star">★</span>
+              <span class="blog-star-label">Puan ver</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-logo">AŞ</span>
+    <span class="footer-copy">© 2026 Ayşenur Şahin</span>
+    <div class="footer-social">
+      <a href="https://github.com/aysenuursahin" target="_blank" data-tooltip="GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg></a>
+    </div>
+    <button class="footer-top" data-scroll-top>↑ Başa Dön</button>
+  </div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.blog-read-more').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      const card    = btn.closest('.blog-card-body');
+      const excerpt = card.querySelector('.blog-card-excerpt');
+      const isOpen  = excerpt.classList.contains('expanded');
+
+      if (isOpen) {
+        excerpt.classList.remove('expanded');
+        btn.innerHTML = 'Devamını Oku <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+      } else {
+        excerpt.classList.add('expanded');
+        btn.innerHTML = 'Kapat <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 19l7-7-7-7"/></svg>';
+      }
+    });
+  });
+});
+</script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

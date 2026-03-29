@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Giriş Yap — Ayşenur Şahin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,300;1,9..144,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/responsive.css">
+</head>
+<body class="auth-page">
+<div class="grain"></div>
+
+<nav id="nav">
+  <a href="../index.html" class="logo">AŞ</a>
+  <div class="nav-links">
+    <a href="../index.html">Ana Sayfa</a>
+    <a href="about.html">Hakkında</a>
+    <a href="projeler.html">Projeler</a>
+    <a href="contact.html">İletişim</a>
+  </div>
+  <div class="nav-right">
+    <div class="nav-auth-links">
+      <a href="login.html" class="register-btn">Giriş Yap</a>
+      <a href="register.html">Kayıt Ol</a>
+    </div>
+    <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+
+<main class="auth-shell">
+  <section class="auth-card">
+    <div class="auth-header">
+      <span class="auth-kicker">Hoş geldin</span>
+      <h1>Giriş Yap</h1>
+      <p>Portfolyo paneline erişmek için hesabına giriş yap.</p>
+    </div>
+
+    <form id="login-form" class="auth-form">
+      <div class="form-group">
+        <label for="login-email">E-posta</label>
+        <input id="login-email" name="email" type="text" required placeholder="ornek@email.com">
+      </div>
+      <div class="form-group">
+        <label for="login-password">Şifre</label>
+        <input id="login-password" name="password" type="password" required placeholder="••••••••">
+      </div>
+      <button type="submit" class="btn-cine auth-submit"><span>Giriş Yap</span></button>
+      <p class="auth-feedback" id="auth-feedback"></p>
+    </form>
+
+    <div class="auth-footer" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+      <span>Hesabın yok mu? <a href="register.html">Kayıt Ol</a></span>
+      <button type="button" id="admin-login-btn" style="display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:8px;border:1px solid rgba(164,111,255,.25);background:rgba(164,111,255,.07);color:var(--muted);font-size:.78rem;font-family:var(--ff-mono);cursor:pointer;transition:all .2s;">
+        🔐 Admin Girişi
+      </button>
+    </div>
+  </section>
+</main>
+
+<!-- Admin Modal -->
+<div id="admin-modal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);place-items:center;">
+  <div style="background:var(--surface);border:1px solid var(--border2);border-radius:24px;padding:32px;width:min(400px,90vw);position:relative;animation:authIn .35s cubic-bezier(.34,1.56,.64,1);">
+    <button id="admin-modal-close" style="position:absolute;top:14px;right:16px;font-size:1.2rem;color:var(--muted);cursor:pointer;background:none;border:none;">×</button>
+    <div style="font-family:var(--ff-mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--crimson);margin-bottom:10px;">Admin Girişi</div>
+    <h2 style="font-family:var(--ff-serif);font-size:1.6rem;font-weight:800;margin-bottom:20px;">Kimlik Doğrula</h2>
+    <div class="form-group">
+      <label for="admin-user">Kullanıcı Adı</label>
+      <input id="admin-user" type="text" placeholder="Kullanıcı adı" autocomplete="off">
+    </div>
+    <div class="form-group">
+      <label for="admin-pass">Şifre</label>
+      <input id="admin-pass" type="password" placeholder="••••••••">
+    </div>
+    <button id="admin-modal-submit" class="btn-cine" style="width:100%;justify-content:center;margin-top:4px;">
+      <span>Giriş Yap</span>
+    </button>
+    <p id="admin-modal-feedback" style="margin-top:10px;text-align:center;font-size:.84rem;min-height:18px;"></p>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+
+  /* ── Normal login form ── */
+  const form = document.getElementById('login-form');
+  if(form){
+    form.addEventListener('submit', async function(e){
+      e.preventDefault();
+      const fb  = document.getElementById('auth-feedback');
+      const btn = form.querySelector('.auth-submit');
+      if(btn) btn.style.opacity = '.7';
+      const emailVal = form.querySelector('#login-email')?.value?.trim() || '';
+      const passVal  = form.querySelector('#login-password')?.value || '';
+      try {
+        const res  = await fetch('../backend/php/auth.php?action=login', {
+          method:'POST', headers:{'Content-Type':'application/json'},
+          body: JSON.stringify({ email: emailVal, password: passVal })
+        });
+        const data = await res.json();
+        if(data.ok){
+          if(fb){ fb.textContent='Giriş başarılı, yönlendiriliyorsunuz…'; fb.className='auth-feedback success'; }
+          setTimeout(()=> window.location.href = '../index.html', 1000);
+        } else {
+          if(fb){ fb.textContent = data.message || 'E-posta veya şifre hatalı.'; fb.className='auth-feedback error'; }
+        }
+      } catch {
+        if(fb){ fb.textContent = 'E-posta veya şifre hatalı.'; fb.className='auth-feedback error'; }
+      } finally {
+        if(btn) btn.style.opacity = '';
+      }
+    });
+  }
+
+  /* ── Admin modal ── */
+  const modal     = document.getElementById('admin-modal');
+  const openBtn   = document.getElementById('admin-login-btn');
+  const closeBtn  = document.getElementById('admin-modal-close');
+  const submitBtn = document.getElementById('admin-modal-submit');
+  const feedback  = document.getElementById('admin-modal-feedback');
+
+  function openModal(){ modal.style.display = 'grid'; document.getElementById('admin-user').focus(); }
+  function closeModal(){ modal.style.display = 'none'; feedback.textContent = ''; }
+
+  openBtn?.addEventListener('click', openModal);
+  closeBtn?.addEventListener('click', closeModal);
+  modal?.addEventListener('click', function(e){ if(e.target === modal) closeModal(); });
+
+  // Enter key inside modal
+  modal?.querySelectorAll('input').forEach(inp => {
+    inp.addEventListener('keydown', e => { if(e.key === 'Enter') submitBtn.click(); });
+  });
+
+  submitBtn?.addEventListener('click', function(){
+    const user = document.getElementById('admin-user')?.value?.trim();
+    const pass = document.getElementById('admin-pass')?.value;
+    if(!user || !pass){ feedback.textContent = 'Kullanıcı adı ve şifre gir.'; feedback.style.color='var(--red)'; return; }
+
+    const ok = (user === 'aysenur') && (pass === 'aysenur123');
+    if(ok){
+      localStorage.setItem('as_admin','1');
+      localStorage.setItem('as_user', JSON.stringify({name:'Ayşenur Şahin', role:'admin'}));
+      feedback.textContent = '✓ Giriş başarılı…';
+      feedback.style.color = 'var(--green)';
+      setTimeout(()=> window.location.href = '../index.html', 800);
+    } else {
+      feedback.textContent = 'Kullanıcı adı veya şifre hatalı.';
+      feedback.style.color = 'var(--red)';
+      document.getElementById('admin-pass').value = '';
+      document.getElementById('admin-user').focus();
+    }
+  });
+});
+</script>
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

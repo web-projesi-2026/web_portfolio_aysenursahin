@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projeler — Ayşenur Şahin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,300;1,9..144,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/responsive.css">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
+</head>
+<body>
+<div class="page-loader"><div class="loader-logo">AŞ</div><div class="loader-bar-wrap"><div class="loader-bar"></div></div></div>
+<div class="scroll-progress"></div>
+<div class="cursor"></div><div class="cursor-follower"></div>
+<div class="grain"></div>
+
+<nav id="nav">
+  <a href="../index.html" class="logo">AŞ</a>
+  <div class="nav-links">
+    <a href="../index.html">Ana Sayfa</a>
+    <a href="about.html">Hakkında</a>
+    <a href="projeler.html" class="active">Projeler</a>
+    <a href="blog.html">Blog</a>
+    <a href="contact.html">İletişim</a>
+  </div>
+  <div class="nav-right">
+    <div class="nav-auth-links">
+      <a href="login.html">Giriş Yap</a>
+      <a href="register.html" class="register-btn">Kayıt Ol</a>
+    </div>
+    <a href="contact.html" class="nav-contact-btn">İletişime Geç</a>
+    <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="../index.html"><i data-lucide="home" width="15" height="15"></i> Ana Sayfa</a>
+  <a href="about.html"><i data-lucide="user" width="15" height="15"></i> Hakkında</a>
+  <a href="projeler.html"><i data-lucide="code-2" width="15" height="15"></i> Projeler</a>
+  <a href="blog.html"><i data-lucide="file-text" width="15" height="15"></i> Blog</a>
+  <a href="contact.html"><i data-lucide="mail" width="15" height="15"></i> İletişim</a>
+</div>
+
+<div class="page-hero">
+  <div class="page-hero-glow"></div>
+  <div class="container">
+    <div class="page-hero-line reveal"><span class="eyebrow-line"></span><span>Çalışmalarım</span></div>
+    <h1 class="reveal d1">Projeler<em>.</em></h1>
+    <p class="page-hero-desc reveal d2">Hayata geçirdiğim uygulamalar ve devam eden çalışmalar.</p>
+  </div>
+</div>
+
+<section class="projects-section">
+  <div class="container">
+    <div class="filter-bar reveal">
+      <span class="filter-label">Filtrele:</span>
+      <button class="filter-btn active" data-filter="all"><i data-lucide="layout-grid" width="13" height="13"></i>Tümü <span class="filter-count">6</span></button>
+      <button class="filter-btn" data-filter="web"><i data-lucide="globe" width="13" height="13"></i>Web <span class="filter-count">3</span></button>
+      <button class="filter-btn" data-filter="fullstack"><i data-lucide="layers" width="13" height="13"></i>Full Stack <span class="filter-count">2</span></button>
+      <button class="filter-btn" data-filter="java"><i data-lucide="coffee" width="13" height="13"></i>Java <span class="filter-count">1</span></button>
+    </div>
+
+    <div class="projects-grid" id="plist">
+
+      <!-- CineTrack -->
+      <a class="project-card-new reveal" data-cat="fullstack web" href="#cinetrack">
+        <div class="pc-poster" style="background:linear-gradient(135deg,#120a2e 0%,#0f3460 60%,#4a1b8a 100%);">
+          <i data-lucide="film" width="48" height="48" style="color:var(--v300);position:relative;z-index:1;"></i>
+          <div class="pc-poster-overlay"></div>
+          <span class="pc-poster-badge featured">★ Öne Çıkan</span>
+          <span class="pc-poster-badge status active"><i data-lucide="zap" width="40" height="40" style="color:var(--gold);position:relative;z-index:1;"></i> Aktif</span>
+        </div>
+        <div class="pc-body">
+          <div class="pc-category"><i data-lucide="layers" width="11" height="11" style="display:inline;vertical-align:middle;margin-right:4px;"></i>Full Stack · Web</div>
+          <div class="pc-title">CineTrack</div>
+          <div class="pc-desc">Film ve dizi takip platformu. Kullanıcılar izleme listesi oluşturabilir, içerik ekleyip puanlayabilir.</div>
+          <div class="pc-rating-row">
+            <div class="project-rating"><div class="stars-row"><span class="s f">★</span><span class="s f">★</span><span class="s f">★</span><span class="s f">★</span><span class="s">★</span></div><span class="rate-val">4.0</span></div>
+            <div class="star-rating-interactive" data-key="cinetrack-proj"><span class="star-i">★</span><span class="star-i">★</span><span class="star-i">★</span><span class="star-i">★</span><span class="star-i">★</span><span class="rating-label">Puan ver</span></div>
+          </div>
+          <div class="vote-row">
+            <button class="vote-btn" data-vote="like" data-project-id="1">👍 <span data-like-count>0</span></button>
+            <button class="vote-btn dislike" data-vote="dislike" data-project-id="1">👎 <span data-dislike-count>0</span></button>
+          </div>
+          <div class="pc-tags"><span class="pc-tag">HTML</span><span class="pc-tag">CSS</span><span class="pc-tag">JavaScript</span><span class="pc-tag">PHP</span><span class="pc-tag">MySQL</span></div>
+          <div class="pc-footer"><span class="pc-link"><i data-lucide="github" width="13" height="13"></i>GitHub'da Gör</span><span class="pc-status">🟡 Geliştirme</span></div>
+        </div>
+      </a>
+
+      <!-- Portfolio -->
+      <a class="project-card-new reveal d1" data-cat="web" href="https://github.com/aysenuursahin/portfolyo" target="_blank">
+        <div class="pc-poster" style="background:linear-gradient(135deg,#0d1b2a,#1b4332);">
+          <i data-lucide="globe" width="40" height="40" style="color:var(--teal);position:relative;z-index:1;"></i>
+          <div class="pc-poster-overlay"></div>
+          <span class="pc-poster-badge status done">✅ Tamamlandı</span>
+        </div>
+        <div class="pc-body">
+          <div class="pc-category"><i data-lucide="globe" width="11" height="11" style="display:inline;vertical-align:middle;margin-right:4px;"></i>Web · Frontend</div>
+          <div class="pc-title">Portfolyo Sitesi</div>
+          <div class="pc-desc">Saf HTML, CSS ve JavaScript ile geliştirilmiş modern kişisel portfolyo sitesi. Responsive tasarım.</div>
+          <div class="pc-rating-row">
+            <div class="project-rating"><div class="stars-row"><span class="s f">★</span><span class="s f">★</span><span class="s f">★</span><span class="s f">★</span><span class="s f">★</span></div><span class="rate-val">5.0</span></div>
+            <div class="star-rating-interactive" data-key="portfolio-proj"><span class="star-i">★</span><span class="star-i">★</span><span class="star-i">★</span><span class="star-i">★</span><span class="star-i">★</span><span class="rating-label">Puan ver</span></div>
+          </div>
+          <div class="vote-row">
+            <button class="vote-btn" data-vote="like" data-project-id="2">👍 <span data-like-count>0</span></button>
+            <button class="vote-btn dislike" data-vote="dislike" data-project-id="2">👎 <span data-dislike-count>0</span></button>
+          </div>
+          <div class="pc-tags"><span class="pc-tag">HTML</span><span class="pc-tag">CSS</span><span class="pc-tag">JavaScript</span></div>
+          <div class="pc-footer"><span class="pc-link"><i data-lucide="github" width="13" height="13"></i>GitHub'da Gör</span><span class="pc-status">✅ Tamamlandı</span></div>
+        </div>
+      </a>
+
+      <!-- TaskFlow -->
+      <a class="project-card-new reveal d2" data-cat="fullstack" href="https://github.com/aysenuursahin" target="_blank">
+        <div class="pc-poster" style="background:linear-gradient(135deg,#0a1628,#1e3a5f,#0d2744);">
+          <i data-lucide="clipboard-list" width="48" height="48" style="color:var(--blue);position:relative;z-index:1;"></i>
+          <div class="pc-poster-overlay"></div>
+          <span class="pc-poster-badge status active"><i data-lucide="zap" width="40" height="40" style="color:var(--gold);position:relative;z-index:1;"></i> Aktif</span>
+        </div>
+        <div class="pc-body">
+          <div class="pc-category"><i data-lucide="layers" width="11" height="11" style="display:inline;vertical-align:middle;margin-right:4px;"></i>Full Stack</div>
+          <div class="pc-title">TaskFlow</div>
+          <div class="pc-desc">Ekip görev ve ilerleme takibi için panel tabanlı proje yönetimi uygulaması.</div>
+          <div class="pc-rating-row">
+            <div class="project-rating"><div class="stars-row"><span class="s f">★</span><span class="s f">★</span><span class="s f">★</span><span class="s f">★</span><span class="s">★</span></div><span class="rate-val">4.0</span></div>
+            <div class="star-rating-interactive" data-key="taskflow-proj"><span class="star-i">★</span><span class="star-i">★</span><span class="star-i">★</span><span class="star-i">★</span><span class="star-i">★</span><span class="rating-label">Puan ver</span></div>
+          </div>
+          <div class="vote-row">
+            <button class="vote-btn" data-vote="like" data-project-id="3">👍 <span data-like-count>0</span></button>
+            <button class="vote-btn dislike" data-vote="dislike" data-project-id="3">👎 <span data-dislike-count>0</span></button>
+          </div>
+          <div class="pc-tags"><span class="pc-tag">PHP</span><span class="pc-tag">JavaScript</span><span class="pc-tag">SQLite</span><span class="pc-tag">CSS</span></div>
+          <div class="pc-footer"><span class="pc-link"><i data-lucide="github" width="13" height="13"></i>GitHub'da Gör</span><span class="pc-status"><i data-lucide="zap" width="40" height="40" style="color:var(--gold);position:relative;z-index:1;"></i> Aktif</span></div>
+        </div>
+      </a>
+
+      <!-- NoteSphere -->
+      <a class="project-card-new reveal d1" data-cat="web" href="https://github.com/aysenuursahin" target="_blank">
+        <div class="pc-poster" style="background:linear-gradient(135deg,#1a0a2e,#3b1f6e,#1f0d44);">
+          <i data-lucide="file-edit" width="48" height="48" style="color:var(--rose);position:relative;z-index:1;"></i>
+          <div class="pc-poster-overlay"></div>
+          <span class="pc-poster-badge status active"><i data-lucide="zap" width="40" height="40" style="color:var(--gold);position:relative;z-index:1;"></i> Aktif</span>
+        </div>
+        <div class="pc-body">
+          <div class="pc-category"><i data-lucide="globe" width="11" height="11" style="display:inline;vertical-align:middle;margin-right:4px;"></i>Web</div>
+          <div class="pc-title">NoteSphere</div>
+          <div class="pc-desc">Etiketleme ve hızlı arama özellikli akıllı not yönetim uygulaması.</div>
+          <div class="pc-rating-row">
+            <div class="project-rating"><div class="stars-row"><span class="s f">★</span><span class="s f">★</span><span class="s f">★</span><span class="s f">★</span><span class="s">★</span></div><span class="rate-val">4.0</span></div>
+            <div class="star-rating-interactive" data-key="notesphere-proj"><span class="star-i">★</span><span class="star-i">★</span><span class="star-i">★</span><span class="star-i">★</span><span class="star-i">★</span><span class="rating-label">Puan ver</span></div>
+          </div>
+          <div class="vote-row">
+            <button class="vote-btn" data-vote="like" data-project-id="4">👍 <span data-like-count>0</span></button>
+            <button class="vote-btn dislike" data-vote="dislike" data-project-id="4">👎 <span data-dislike-count>0</span></button>
+          </div>
+          <div class="pc-tags"><span class="pc-tag">HTML</span><span class="pc-tag">CSS</span><span class="pc-tag">JavaScript</span></div>
+          <div class="pc-footer"><span class="pc-link"><i data-lucide="github" width="13" height="13"></i>GitHub'da Gör</span><span class="pc-status"><i data-lucide="zap" width="40" height="40" style="color:var(--gold);position:relative;z-index:1;"></i> Aktif</span></div>
+        </div>
+      </a>
+
+      <!-- ShopWise -->
+      <a class="project-card-new reveal d2" data-cat="web" href="https://github.com/aysenuursahin" target="_blank">
+        <div class="pc-poster" style="background:linear-gradient(135deg,#0d2818,#1b5e20,#0a3d14);">
+          <i data-lucide="shopping-bag" width="48" height="48" style="color:var(--teal);position:relative;z-index:1;"></i>
+          <div class="pc-poster-overlay"></div>
+          <span class="pc-poster-badge status done">✅ Tamamlandı</span>
+        </div>
+        <div class="pc-body">
+          <div class="pc-category"><i data-lucide="globe" width="11" height="11" style="display:inline;vertical-align:middle;margin-right:4px;"></i>Web · Frontend</div>
+          <div class="pc-title">ShopWise</div>
+          <div class="pc-desc">Ürün listeleme, favori ve sepet akışları içeren e-ticaret arayüz prototipi.</div>
+          <div class="pc-rating-row">
+            <div class="project-rating"><div class="stars-row"><span class="s f">★</span><span class="s f">★</span><span class="s f">★</span><span class="s f">★</span><span class="s f">★</span></div><span class="rate-val">5.0</span></div>
+            <div class="star-rating-interactive" data-key="shopwise-proj"><span class="star-i">★</span><span class="star-i">★</span><span class="star-i">★</span><span class="star-i">★</span><span class="star-i">★</span><span class="rating-label">Puan ver</span></div>
+          </div>
+          <div class="vote-row">
+            <button class="vote-btn" data-vote="like" data-project-id="6">👍 <span data-like-count>0</span></button>
+            <button class="vote-btn dislike" data-vote="dislike" data-project-id="6">👎 <span data-dislike-count>0</span></button>
+          </div>
+          <div class="pc-tags"><span class="pc-tag">HTML</span><span class="pc-tag">CSS</span><span class="pc-tag">JavaScript</span></div>
+          <div class="pc-footer"><span class="pc-link"><i data-lucide="github" width="13" height="13"></i>GitHub'da Gör</span><span class="pc-status">✅ Tamamlandı</span></div>
+        </div>
+      </a>
+
+      <!-- JavaHub API -->
+      <div class="project-card-new reveal d3" data-cat="java" style="opacity:.55;cursor:default;">
+        <div class="pc-poster" style="background:linear-gradient(135deg,#1c1c1c,#2d2d2d);">
+          <i data-lucide="coffee" width="48" height="48" style="color:var(--gold);position:relative;z-index:1;"></i>
+          <div class="pc-poster-overlay"></div>
+          <span class="pc-poster-badge status plan">🔵 Planlama</span>
+        </div>
+        <div class="pc-body">
+          <div class="pc-category"><i data-lucide="coffee" width="11" height="11" style="display:inline;vertical-align:middle;margin-right:4px;"></i>Java · Backend</div>
+          <div class="pc-title">JavaHub API</div>
+          <div class="pc-desc">REST prensipli backend servis katmanı ve rol tabanlı kimlik doğrulama. Yakında!</div>
+          <div class="pc-tags"><span class="pc-tag">Java</span><span class="pc-tag">Spring</span><span class="pc-tag">PostgreSQL</span></div>
+          <div class="pc-footer"><span class="pc-link" style="color:var(--muted)"><i data-lucide="clock" width="13" height="13"></i>Yakında</span><span class="pc-status">🔵 Planlama</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section-cta">
+  <div class="container">
+    <div class="cta-inner reveal">
+      <div class="cta-glow"></div>
+      <p class="cta-label">Birlikte çalışalım</p>
+      <h2 class="cta-title">Bir fikrin mi var?<br><em>Hayata geçirelim.</em></h2>
+      <a href="contact.html" class="btn-cine large"><i data-lucide="send" width="18" height="18"></i><span>İletişime Geç</span></a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <span class="footer-logo">AŞ</span>
+    <span class="footer-copy">© 2026 Ayşenur Şahin</span>
+    <div class="footer-social">
+      <a href="https://github.com/aysenuursahin" target="_blank" data-tooltip="GitHub"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg></a>
+    </div>
+    <button class="footer-top" data-scroll-top>↑ Başa Dön</button>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

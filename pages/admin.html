@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Paneli — Ayşenur Şahin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&family=Outfit:wght@700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/responsive.css">
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
+</head>
+<body>
+<div class="grain"></div>
+
+<div class="admin-layout">
+  <!-- Sidebar -->
+  <aside class="admin-sidebar">
+    <div class="admin-sidebar-logo">
+      <a href="../index.html" class="logo">AŞ · Admin</a>
+    </div>
+    <nav>
+      <a href="#dashboard" class="admin-nav-item active">
+        <i data-lucide="layout-dashboard" width="15" height="15"></i> Panel
+      </a>
+      <a href="#messages" class="admin-nav-item">
+        <i data-lucide="mail" width="15" height="15"></i> Mesajlar
+      </a>
+      <a href="#users" class="admin-nav-item">
+        <i data-lucide="users" width="15" height="15"></i> Kullanıcılar
+      </a>
+      <a href="#projects" class="admin-nav-item">
+        <i data-lucide="code-2" width="15" height="15"></i> Projeler
+      </a>
+      <a href="../index.html" class="admin-nav-item" style="margin-top:auto;border-top:1px solid var(--border);position:absolute;bottom:0;left:0;right:0;">
+        <i data-lucide="arrow-left" width="15" height="15"></i> Siteye Dön
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Content -->
+  <main class="admin-content">
+    <div class="admin-header">
+      <h1>Panel</h1>
+      <p style="color:var(--muted);font-size:.875rem;margin-top:4px;">Hoş geldin, Ayşenur 👋</p>
+    </div>
+
+    <div class="admin-stats">
+      <div class="admin-stat-card">
+        <div class="admin-stat-card-val">6</div>
+        <div class="admin-stat-card-label">Toplam Proje</div>
+      </div>
+      <div class="admin-stat-card">
+        <div class="admin-stat-card-val">—</div>
+        <div class="admin-stat-card-label">Mesaj</div>
+      </div>
+      <div class="admin-stat-card">
+        <div class="admin-stat-card-val">—</div>
+        <div class="admin-stat-card-label">Kullanıcı</div>
+      </div>
+      <div class="admin-stat-card">
+        <div class="admin-stat-card-val">100%</div>
+        <div class="admin-stat-card-label">Uptime</div>
+      </div>
+    </div>
+
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px;">
+      <h3 style="font-size:1rem;font-weight:600;margin-bottom:16px;">Son Projeler</h3>
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Proje</th>
+            <th>Kategori</th>
+            <th>Durum</th>
+            <th>Teknolojiler</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>CineTrack</td><td style="font-family:var(--ff-mono);font-size:.78rem;color:var(--muted);">fullstack</td><td><span style="color:var(--gold);">● Geliştirme</span></td><td style="font-family:var(--ff-mono);font-size:.78rem;color:var(--muted);">PHP, JS, MySQL</td></tr>
+          <tr><td>Portfolyo Sitesi</td><td style="font-family:var(--ff-mono);font-size:.78rem;color:var(--muted);">web</td><td><span style="color:var(--green);">● Tamamlandı</span></td><td style="font-family:var(--ff-mono);font-size:.78rem;color:var(--muted);">HTML, CSS, JS</td></tr>
+          <tr><td>TaskFlow</td><td style="font-family:var(--ff-mono);font-size:.78rem;color:var(--muted);">fullstack</td><td><span style="color:var(--gold);">● Aktif</span></td><td style="font-family:var(--ff-mono);font-size:.78rem;color:var(--muted);">PHP, JS, SQLite</td></tr>
+          <tr><td>NoteSphere</td><td style="font-family:var(--ff-mono);font-size:.78rem;color:var(--muted);">web</td><td><span style="color:var(--gold);">● Aktif</span></td><td style="font-family:var(--ff-mono);font-size:.78rem;color:var(--muted);">HTML, CSS, JS</td></tr>
+          <tr><td>ShopWise</td><td style="font-family:var(--ff-mono);font-size:.78rem;color:var(--muted);">web</td><td><span style="color:var(--green);">● Tamamlandı</span></td><td style="font-family:var(--ff-mono);font-size:.78rem;color:var(--muted);">HTML, CSS, JS</td></tr>
+          <tr><td>JavaHub API</td><td style="font-family:var(--ff-mono);font-size:.78rem;color:var(--muted);">java</td><td><span style="color:var(--blue);">● Planlama</span></td><td style="font-family:var(--ff-mono);font-size:.78rem;color:var(--muted);">Java, Spring</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+</div>
+
+<script src="../assets/js/main.js"></script>
+</body>
+</html>

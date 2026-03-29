@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kayıt Ol — Ayşenur Şahin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,300;1,9..144,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/responsive.css">
+</head>
+<body class="auth-page">
+<div class="grain"></div>
+
+<nav id="nav">
+  <a href="../index.html" class="logo">AŞ</a>
+  <div class="nav-links">
+    <a href="../index.html">Ana Sayfa</a>
+    <a href="about.html">Hakkında</a>
+    <a href="projeler.html">Projeler</a>
+    <a href="contact.html">İletişim</a>
+  </div>
+  <div class="nav-right">
+    <div class="nav-auth-links">
+      <a href="login.html">Giriş Yap</a>
+      <a href="register.html" class="register-btn">Kayıt Ol</a>
+    </div>
+    <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+
+<main class="auth-shell">
+  <section class="auth-card">
+    <div class="auth-header">
+      <span class="auth-kicker">Başlayalım</span>
+      <h1>Kayıt Ol</h1>
+      <p>Yeni hesap oluşturarak portfolyo deneyimine katıl.</p>
+    </div>
+    <form id="register-form" class="auth-form">
+      <div class="form-group">
+        <label for="register-name">Ad Soyad</label>
+        <input id="register-name" name="name" type="text" required placeholder="Adın Soyadın">
+      </div>
+      <div class="form-group">
+        <label for="register-email">E-posta</label>
+        <input id="register-email" name="email" type="email" required placeholder="ornek@email.com">
+      </div>
+      <div class="form-group">
+        <label for="register-password">Şifre</label>
+        <input id="register-password" name="password" type="password" minlength="6" required placeholder="En az 6 karakter">
+      </div>
+      <button type="submit" class="btn-cine auth-submit"><span>Kayıt Ol</span></button>
+      <p class="auth-feedback" id="auth-feedback"></p>
+    </form>
+    <div class="auth-footer">Zaten hesabın var mı? <a href="login.html">Giriş Yap</a></div>
+  </section>
+</main>
+
+<script src="../assets/js/main.js"></script>
+</body>
+</html>
