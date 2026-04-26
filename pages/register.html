@@ -19,6 +19,65 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,300;1,9..144,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/css/style.css">
   <link rel="stylesheet" href="../assets/css/responsive.css">
+  <style>
+    /* ── Form doğrulama renk sistemi ── */
+    .form-group input.input-error {
+      border-color: #e05252 !important;
+      box-shadow: 0 0 0 3px rgba(224, 82, 82, 0.15) !important;
+    }
+    .form-group input.input-success {
+      border-color: #4caf7d !important;
+      box-shadow: 0 0 0 3px rgba(76, 175, 125, 0.15) !important;
+    }
+    .field-error {
+      color: #e05252;
+      font-size: .78rem;
+      margin-top: 4px;
+      min-height: 18px;
+      display: block;
+    }
+    /* ── Submit butonu durumları ── */
+    .auth-submit {
+      transition: background 0.25s, border-color 0.25s, color 0.25s, opacity 0.2s;
+    }
+    .auth-submit.btn-success {
+      background: #4caf7d !important;
+      border-color: #4caf7d !important;
+      color: #fff !important;
+    }
+    .auth-submit.btn-error {
+      background: #e05252 !important;
+      border-color: #e05252 !important;
+      color: #fff !important;
+    }
+    /* ── Genel feedback mesajı ── */
+    .auth-feedback {
+      text-align: center;
+      font-size: .86rem;
+      min-height: 20px;
+      margin-top: 4px;
+    }
+    .auth-feedback.success { color: #4caf7d; font-weight: 600; }
+    .auth-feedback.error   { color: #e05252; font-weight: 500; }
+    /* ── Şifre güç göstergesi ── */
+    .password-strength {
+      display: flex;
+      gap: 5px;
+      margin-top: 6px;
+    }
+    .strength-bar {
+      flex: 1;
+      height: 4px;
+      border-radius: 4px;
+      background: rgba(255,255,255,.08);
+      transition: background .3s;
+    }
+    .strength-label {
+      font-size: .72rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+  </style>
 </head>
 <body class="auth-page">
 <div class="grain"></div>
@@ -47,30 +106,249 @@
       <h1>Kayıt Ol</h1>
       <p>Yeni hesap oluşturarak portfolyo deneyimine katıl.</p>
     </div>
-    <form id="register-form" class="auth-form">
+
+    <form id="register-form" class="auth-form" novalidate>
+
+      <!-- Ad Soyad -->
       <div class="form-group">
         <label for="register-name">Ad Soyad</label>
-        <input id="register-name" name="name" type="text" required placeholder="Adın Soyadın">
+        <input id="register-name" name="name" type="text" required
+               placeholder="Adın Soyadın" autocomplete="name">
+        <span class="field-error" id="err-name"></span>
       </div>
+
+      <!-- E-posta -->
       <div class="form-group">
         <label for="register-email">E-posta</label>
-        <input id="register-email" name="email" type="email" required placeholder="ornek@email.com">
+        <input id="register-email" name="email" type="email" required
+               placeholder="ornek@email.com" autocomplete="email">
+        <span class="field-error" id="err-email"></span>
       </div>
+
+      <!-- Şifre -->
       <div class="form-group">
         <label for="register-password">Şifre</label>
-        <input id="register-password" name="password" type="password" minlength="6" required placeholder="En az 6 karakter">
+        <input id="register-password" name="password" type="password"
+               minlength="6" required placeholder="En az 6 karakter"
+               autocomplete="new-password">
+        <div class="password-strength">
+          <div class="strength-bar" id="sb1"></div>
+          <div class="strength-bar" id="sb2"></div>
+          <div class="strength-bar" id="sb3"></div>
+          <div class="strength-bar" id="sb4"></div>
+        </div>
+        <div class="strength-label" id="strength-label"></div>
+        <span class="field-error" id="err-password"></span>
       </div>
-      <button type="submit" class="btn-cine auth-submit"><span>Kayıt Ol</span></button>
+
+      <!-- Şifre Tekrar -->
+      <div class="form-group">
+        <label for="register-password2">Şifre Tekrar</label>
+        <input id="register-password2" name="password2" type="password"
+               required placeholder="Şifreni tekrar gir"
+               autocomplete="new-password">
+        <span class="field-error" id="err-password2"></span>
+      </div>
+
+      <button type="submit" class="btn-cine auth-submit" id="reg-btn">
+        <span id="reg-btn-label">Kayıt Ol</span>
+      </button>
       <p class="auth-feedback" id="auth-feedback"></p>
     </form>
+
     <div class="auth-footer">Zaten hesabın var mı? <a href="login.html">Giriş Yap</a></div>
   </section>
 </main>
 
-<link rel="stylesheet" href="../assets/css/interactions.css">
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+  const form   = document.getElementById('register-form');
+  const btn    = document.getElementById('reg-btn');
+  const btnLbl = document.getElementById('reg-btn-label');
+  const fb     = document.getElementById('auth-feedback');
+
+  /* ── Anlık şifre gücü ── */
+  const passInput = document.getElementById('register-password');
+  passInput.addEventListener('input', updateStrength);
+
+  function updateStrength() {
+    const v = passInput.value;
+    let score = 0;
+    if (v.length >= 6)               score++;
+    if (v.length >= 10)              score++;
+    if (/[A-Z]/.test(v))            score++;
+    if (/[0-9!@#$%^&*]/.test(v))    score++;
+
+    const colors  = ['', '#e05252', '#f0a04b', '#4caf7d', '#2e9e67'];
+    const labels  = ['', 'Zayıf', 'Orta', 'İyi', 'Güçlü'];
+    const bars    = [document.getElementById('sb1'), document.getElementById('sb2'),
+                     document.getElementById('sb3'), document.getElementById('sb4')];
+
+    bars.forEach((b, i) => {
+      b.style.background = i < score ? colors[score] : 'rgba(255,255,255,.08)';
+    });
+    const lbl = document.getElementById('strength-label');
+    lbl.textContent   = v.length ? labels[score] : '';
+    lbl.style.color   = v.length ? colors[score] : '';
+  }
+
+  /* ── Alan doğrulama yardımcıları ── */
+  function setError(inputEl, errEl, msg) {
+    inputEl.classList.remove('input-success');
+    inputEl.classList.add('input-error');
+    errEl.textContent = msg;
+  }
+  function setOk(inputEl, errEl) {
+    inputEl.classList.remove('input-error');
+    inputEl.classList.add('input-success');
+    errEl.textContent = '';
+  }
+  function clearState(inputEl, errEl) {
+    inputEl.classList.remove('input-error', 'input-success');
+    errEl.textContent = '';
+  }
+
+  /* ── Blur'da doğrula + bir kez hata verince input'ta anlık güncelle ── */
+  function attachLiveValidation(inputId, validateFn) {
+    const el = document.getElementById(inputId);
+    let touched = false;
+    el.addEventListener('blur', function () {
+      touched = true;
+      validateFn();
+    });
+    el.addEventListener('input', function () {
+      if (touched) validateFn();
+    });
+  }
+
+  attachLiveValidation('register-name',      () => validateName(true));
+  attachLiveValidation('register-email',     () => validateEmail(true));
+  attachLiveValidation('register-password',  () => validatePassword(true));
+  attachLiveValidation('register-password2', () => validatePassword2(true));
+
+  function validateName(show) {
+    const el  = document.getElementById('register-name');
+    const err = document.getElementById('err-name');
+    const v   = el.value.trim();
+    if (!show) return v.length >= 2;
+    if (!v)             { setError(el, err, 'Ad Soyad boş bırakılamaz.'); return false; }
+    if (v.length < 2)   { setError(el, err, 'En az 2 karakter olmalı.'); return false; }
+    setOk(el, err); return true;
+  }
+
+  function validateEmail(show) {
+    const el  = document.getElementById('register-email');
+    const err = document.getElementById('err-email');
+    const v   = el.value.trim();
+    const re  = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!show) return re.test(v);
+    if (!v)          { setError(el, err, 'E-posta boş bırakılamaz.'); return false; }
+    if (!re.test(v)) { setError(el, err, 'Geçerli bir e-posta adresi gir.'); return false; }
+    setOk(el, err); return true;
+  }
+
+  function validatePassword(show) {
+    const el  = document.getElementById('register-password');
+    const err = document.getElementById('err-password');
+    const v   = el.value;
+    if (!show) return v.length >= 6;
+    if (!v)          { setError(el, err, 'Şifre boş bırakılamaz.'); return false; }
+    if (v.length < 6){ setError(el, err, 'Şifre en az 6 karakter olmalı.'); return false; }
+    setOk(el, err); return true;
+  }
+
+  function validatePassword2(show) {
+    const el   = document.getElementById('register-password2');
+    const err  = document.getElementById('err-password2');
+    const pass = document.getElementById('register-password').value;
+    const v    = el.value;
+    if (!show) return v === pass && v !== '';
+    if (!v)          { setError(el, err, 'Şifre tekrarı boş bırakılamaz.'); return false; }
+    if (v !== pass)  { setError(el, err, 'Şifreler eşleşmiyor.'); return false; }
+    setOk(el, err); return true;
+  }
+
+  /* ── Form gönder ── */
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    // Tüm alanları doğrula
+    const ok = validateName(true) & validateEmail(true) &
+               validatePassword(true) & validatePassword2(true);
+
+    if (!ok) {
+      btnLbl.textContent = 'Hataları düzelt';
+      btn.classList.add('btn-error');
+      btn.classList.remove('btn-success');
+      setTimeout(() => {
+        btn.classList.remove('btn-error');
+        btnLbl.textContent = 'Kayıt Ol';
+      }, 2000);
+      return;
+    }
+
+    // Gönderiliyor...
+    btn.disabled      = true;
+    btn.style.opacity = '.7';
+    btnLbl.textContent = 'Kaydediliyor…';
+    fb.textContent    = '';
+    fb.className      = 'auth-feedback';
+
+    try {
+      const res = await fetch('../backend/php/auth.php?action=register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name:     document.getElementById('register-name').value.trim(),
+          email:    document.getElementById('register-email').value.trim(),
+          password: document.getElementById('register-password').value
+        })
+      });
+
+      const data = await res.json();
+
+      if (data.ok) {
+        /* ── BAŞARILI: buton yeşil ── */
+        btn.classList.add('btn-success');
+        btn.classList.remove('btn-error');
+        btnLbl.textContent = '✓ Kayıt Başarılı!';
+        fb.textContent     = 'Hesabın oluşturuldu, yönlendiriliyorsunuz…';
+        fb.className       = 'auth-feedback success';
+        setTimeout(() => window.location.href = '../index.html', 1500);
+      } else {
+        /* ── HATA: buton kırmızı ── */
+        btn.classList.add('btn-error');
+        btn.classList.remove('btn-success');
+        btnLbl.textContent = '✗ Kayıt Başarısız';
+        fb.textContent     = data.message || 'Bir hata oluştu, tekrar dene.';
+        fb.className       = 'auth-feedback error';
+        setTimeout(() => {
+          btn.classList.remove('btn-error');
+          btnLbl.textContent = 'Kayıt Ol';
+          btn.disabled       = false;
+          btn.style.opacity  = '';
+        }, 2500);
+      }
+    } catch {
+      /* ── AĞDA HATA ── */
+      btn.classList.add('btn-error');
+      btnLbl.textContent = '✗ Bağlantı Hatası';
+      fb.textContent     = 'Sunucuya ulaşılamadı. PHP sunucunun çalıştığını kontrol et.';
+      fb.className       = 'auth-feedback error';
+      setTimeout(() => {
+        btn.classList.remove('btn-error');
+        btnLbl.textContent = 'Kayıt Ol';
+        btn.disabled       = false;
+        btn.style.opacity  = '';
+      }, 3000);
+    }
+  });
+});
+</script>
+
 <link rel="stylesheet" href="../assets/css/interactions.css">
 <script src="../assets/js/main.js"></script>
-<script src="../assets/js/interactions.js"></script>
 <script src="../assets/js/interactions.js"></script>
 </body>
 </html>
