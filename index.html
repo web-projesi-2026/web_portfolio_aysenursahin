@@ -44,7 +44,8 @@
     <a href="pages/contact.html">İletişim</a>
   </div>
   <div class="nav-right">
-    <div class="nav-auth-links">
+    <div class="nav-auth-links" id="nav-auth-links">
+      <!-- JS tarafından doldurulur -->
       <a href="pages/login.html">Giriş Yap</a>
       <a href="pages/register.html" class="register-btn">Kayıt Ol</a>
     </div>
@@ -52,6 +53,20 @@
     <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
   </div>
 </nav>
+<script>
+(function () {
+  var user = null;
+  try { user = JSON.parse(localStorage.getItem('as_user')); } catch(e) {}
+  var links = document.getElementById('nav-auth-links');
+  if (!links) return;
+  if (user && user.name) {
+    links.innerHTML =
+      '<span style="color:var(--accent);font-size:.85rem;font-family:var(--ff-mono);">👋 ' + user.name.split(' ')[0] + '</span>' +
+      '<button onclick="localStorage.removeItem(\'as_user\');localStorage.removeItem(\'as_admin\');window.location.reload();" ' +
+      'style="padding:6px 14px;border-radius:8px;border:1px solid rgba(255,80,80,.3);background:rgba(255,80,80,.08);color:#e05252;font-size:.8rem;font-family:var(--ff-mono);cursor:pointer;">Çıkış Yap</button>';
+  }
+})();
+</script>
 <div class="mobile-menu" id="mobile-menu">
   <a href="index.html"><i data-lucide="home" width="15" height="15"></i> Ana Sayfa</a>
   <a href="pages/about.html"><i data-lucide="user" width="15" height="15"></i> Hakkında</a>
