@@ -19,7 +19,57 @@
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,300;1,9..144,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/css/style.css">
   <link rel="stylesheet" href="../assets/css/responsive.css">
-  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js" defer></script>
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+  <style>
+    /* ── Favori butonu ── */
+    .fav-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.45);
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+    .fav-btn:hover { border-color: #f59e0b; color: #f59e0b; }
+    .fav-btn.aktif { background: rgba(245,158,11,0.12); border-color: #f59e0b; color: #f59e0b; }
+    .fav-btn .fav-star { font-size: 0.85rem; }
+
+    /* ── Favori bar ── */
+    .fav-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 1.5rem;
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.45);
+      padding: 10px 16px;
+      background: rgba(245,158,11,0.06);
+      border: 1px solid rgba(245,158,11,0.18);
+      border-radius: 10px;
+    }
+    .fav-bar .fav-sayi { color: #f59e0b; font-weight: 700; }
+    .fav-temizle-btn {
+      margin-left: auto;
+      background: transparent;
+      border: none;
+      color: rgba(255,80,80,0.6);
+      font-size: 0.75rem;
+      cursor: pointer;
+      text-decoration: underline;
+      font-family: inherit;
+    }
+    .fav-temizle-btn:hover { color: #ef4444; }
+
+    /* Favori filtre butonu */
+    .filter-btn[data-filter="favori"] { position: relative; }
+  </style>
 </head>
 <body>
 <div class="page-loader"><div class="loader-logo">AŞ</div><div class="loader-bar-wrap"><div class="loader-bar"></div></div></div>
@@ -80,151 +130,25 @@
   <div class="container">
     <div class="filter-bar reveal">
       <span class="filter-label">Filtrele:</span>
-      <button class="filter-btn active" data-filter="all"><i data-lucide="layout-grid" width="13" height="13"></i>Tümü <span class="filter-count">6</span></button>
-      <button class="filter-btn" data-filter="web"><i data-lucide="globe" width="13" height="13"></i>Web <span class="filter-count">3</span></button>
-      <button class="filter-btn" data-filter="fullstack"><i data-lucide="layers" width="13" height="13"></i>Full Stack <span class="filter-count">2</span></button>
-      <button class="filter-btn" data-filter="java"><i data-lucide="coffee" width="13" height="13"></i>Java <span class="filter-count">1</span></button>
+      <button class="filter-btn active" data-filter="all"><i data-lucide="layout-grid" width="13" height="13"></i>Tümü <span class="filter-count" id="fc-all">0</span></button>
+      <button class="filter-btn" data-filter="web"><i data-lucide="globe" width="13" height="13"></i>Web <span class="filter-count" id="fc-web">0</span></button>
+      <button class="filter-btn" data-filter="fullstack"><i data-lucide="layers" width="13" height="13"></i>Full Stack <span class="filter-count" id="fc-fullstack">0</span></button>
+      <button class="filter-btn" data-filter="java"><i data-lucide="coffee" width="13" height="13"></i>Java <span class="filter-count" id="fc-java">0</span></button>
+      <button class="filter-btn" data-filter="favori">⭐ Favoriler <span class="filter-count" id="fc-favori">0</span></button>
     </div>
 
-    <div class="projects-grid" id="plist">
+    <!-- Favori bilgi çubuğu -->
+    <div class="fav-bar" id="favBar" style="display:none;">
+      ⭐ <span class="fav-sayi" id="favSayi">0</span> proje favorilendi
+      <button class="fav-temizle-btn" id="favTemizle">Tümünü temizle</button>
+    </div>
 
-      <!-- CineTrack -->
-      <a class="project-card-new reveal" data-cat="fullstack web" href="#cinetrack">
-        <div class="pc-poster" style="background:linear-gradient(135deg,#120a2e 0%,#0f3460 60%,#4a1b8a 100%);">
-          <i data-lucide="film" width="48" height="48" style="color:var(--v300);position:relative;z-index:1;"></i>
-          <div class="pc-poster-overlay"></div>
-          <span class="pc-poster-badge featured">★ Öne Çıkan</span>
-          <span class="pc-poster-badge status active"><i data-lucide="zap" width="40" height="40" style="color:var(--gold);position:relative;z-index:1;"></i> Aktif</span>
-        </div>
-        <div class="pc-body">
-          <div class="pc-category"><i data-lucide="layers" width="11" height="11" style="display:inline;vertical-align:middle;margin-right:4px;"></i>Full Stack · Web</div>
-          <div class="pc-title">CineTrack</div>
-          <div class="pc-desc">Film ve dizi takip platformu. Kullanıcılar izleme listesi oluşturabilir, içerik ekleyip puanlayabilir.</div>
-          <div class="pc-rating-row">
-            <div class="project-rating"><div class="stars-row"><span class="s f">★</span><span class="s f">★</span><span class="s f">★</span><span class="s f">★</span><span class="s">★</span></div><span class="rate-val">4.0</span></div>
-            <div class="star-rating-interactive" data-key="cinetrack-proj"><span class="star-i">★</span><span class="star-i">★</span><span class="star-i">★</span><span class="star-i">★</span><span class="star-i">★</span><span class="rating-label">Puan ver</span></div>
-          </div>
-          <div class="vote-row">
-            <button class="vote-btn" data-vote="like" data-project-id="1">👍 <span data-like-count>0</span></button>
-            <button class="vote-btn dislike" data-vote="dislike" data-project-id="1">👎 <span data-dislike-count>0</span></button>
-          </div>
-          <div class="pc-tags"><span class="pc-tag">HTML</span><span class="pc-tag">CSS</span><span class="pc-tag">JavaScript</span><span class="pc-tag">PHP</span><span class="pc-tag">MySQL</span></div>
-          <div class="pc-footer"><span class="pc-link"><i data-lucide="github" width="13" height="13"></i>GitHub'da Gör</span><span class="pc-status">🟡 Geliştirme</span></div>
-        </div>
-      </a>
+    <!-- Kartlar JS ile yazılacak -->
+    <div class="projects-grid" id="plist"></div>
 
-      <!-- Portfolio -->
-      <a class="project-card-new reveal d1" data-cat="web" href="https://github.com/aysenuursahin/portfolyo" target="_blank">
-        <div class="pc-poster" style="background:linear-gradient(135deg,#0d1b2a,#1b4332);">
-          <i data-lucide="globe" width="40" height="40" style="color:var(--teal);position:relative;z-index:1;"></i>
-          <div class="pc-poster-overlay"></div>
-          <span class="pc-poster-badge status done">✅ Tamamlandı</span>
-        </div>
-        <div class="pc-body">
-          <div class="pc-category"><i data-lucide="globe" width="11" height="11" style="display:inline;vertical-align:middle;margin-right:4px;"></i>Web · Frontend</div>
-          <div class="pc-title">Portfolyo Sitesi</div>
-          <div class="pc-desc">Saf HTML, CSS ve JavaScript ile geliştirilmiş modern kişisel portfolyo sitesi. Responsive tasarım.</div>
-          <div class="pc-rating-row">
-            <div class="project-rating"><div class="stars-row"><span class="s f">★</span><span class="s f">★</span><span class="s f">★</span><span class="s f">★</span><span class="s f">★</span></div><span class="rate-val">5.0</span></div>
-            <div class="star-rating-interactive" data-key="portfolio-proj"><span class="star-i">★</span><span class="star-i">★</span><span class="star-i">★</span><span class="star-i">★</span><span class="star-i">★</span><span class="rating-label">Puan ver</span></div>
-          </div>
-          <div class="vote-row">
-            <button class="vote-btn" data-vote="like" data-project-id="2">👍 <span data-like-count>0</span></button>
-            <button class="vote-btn dislike" data-vote="dislike" data-project-id="2">👎 <span data-dislike-count>0</span></button>
-          </div>
-          <div class="pc-tags"><span class="pc-tag">HTML</span><span class="pc-tag">CSS</span><span class="pc-tag">JavaScript</span></div>
-          <div class="pc-footer"><span class="pc-link"><i data-lucide="github" width="13" height="13"></i>GitHub'da Gör</span><span class="pc-status">✅ Tamamlandı</span></div>
-        </div>
-      </a>
-
-      <!-- TaskFlow -->
-      <a class="project-card-new reveal d2" data-cat="fullstack" href="https://github.com/aysenuursahin" target="_blank">
-        <div class="pc-poster" style="background:linear-gradient(135deg,#0a1628,#1e3a5f,#0d2744);">
-          <i data-lucide="clipboard-list" width="48" height="48" style="color:var(--blue);position:relative;z-index:1;"></i>
-          <div class="pc-poster-overlay"></div>
-          <span class="pc-poster-badge status active"><i data-lucide="zap" width="40" height="40" style="color:var(--gold);position:relative;z-index:1;"></i> Aktif</span>
-        </div>
-        <div class="pc-body">
-          <div class="pc-category"><i data-lucide="layers" width="11" height="11" style="display:inline;vertical-align:middle;margin-right:4px;"></i>Full Stack</div>
-          <div class="pc-title">TaskFlow</div>
-          <div class="pc-desc">Ekip görev ve ilerleme takibi için panel tabanlı proje yönetimi uygulaması.</div>
-          <div class="pc-rating-row">
-            <div class="project-rating"><div class="stars-row"><span class="s f">★</span><span class="s f">★</span><span class="s f">★</span><span class="s f">★</span><span class="s">★</span></div><span class="rate-val">4.0</span></div>
-            <div class="star-rating-interactive" data-key="taskflow-proj"><span class="star-i">★</span><span class="star-i">★</span><span class="star-i">★</span><span class="star-i">★</span><span class="star-i">★</span><span class="rating-label">Puan ver</span></div>
-          </div>
-          <div class="vote-row">
-            <button class="vote-btn" data-vote="like" data-project-id="3">👍 <span data-like-count>0</span></button>
-            <button class="vote-btn dislike" data-vote="dislike" data-project-id="3">👎 <span data-dislike-count>0</span></button>
-          </div>
-          <div class="pc-tags"><span class="pc-tag">PHP</span><span class="pc-tag">JavaScript</span><span class="pc-tag">SQLite</span><span class="pc-tag">CSS</span></div>
-          <div class="pc-footer"><span class="pc-link"><i data-lucide="github" width="13" height="13"></i>GitHub'da Gör</span><span class="pc-status"><i data-lucide="zap" width="40" height="40" style="color:var(--gold);position:relative;z-index:1;"></i> Aktif</span></div>
-        </div>
-      </a>
-
-      <!-- NoteSphere -->
-      <a class="project-card-new reveal d1" data-cat="web" href="https://github.com/aysenuursahin" target="_blank">
-        <div class="pc-poster" style="background:linear-gradient(135deg,#1a0a2e,#3b1f6e,#1f0d44);">
-          <i data-lucide="file-edit" width="48" height="48" style="color:var(--rose);position:relative;z-index:1;"></i>
-          <div class="pc-poster-overlay"></div>
-          <span class="pc-poster-badge status active"><i data-lucide="zap" width="40" height="40" style="color:var(--gold);position:relative;z-index:1;"></i> Aktif</span>
-        </div>
-        <div class="pc-body">
-          <div class="pc-category"><i data-lucide="globe" width="11" height="11" style="display:inline;vertical-align:middle;margin-right:4px;"></i>Web</div>
-          <div class="pc-title">NoteSphere</div>
-          <div class="pc-desc">Etiketleme ve hızlı arama özellikli akıllı not yönetim uygulaması.</div>
-          <div class="pc-rating-row">
-            <div class="project-rating"><div class="stars-row"><span class="s f">★</span><span class="s f">★</span><span class="s f">★</span><span class="s f">★</span><span class="s">★</span></div><span class="rate-val">4.0</span></div>
-            <div class="star-rating-interactive" data-key="notesphere-proj"><span class="star-i">★</span><span class="star-i">★</span><span class="star-i">★</span><span class="star-i">★</span><span class="star-i">★</span><span class="rating-label">Puan ver</span></div>
-          </div>
-          <div class="vote-row">
-            <button class="vote-btn" data-vote="like" data-project-id="4">👍 <span data-like-count>0</span></button>
-            <button class="vote-btn dislike" data-vote="dislike" data-project-id="4">👎 <span data-dislike-count>0</span></button>
-          </div>
-          <div class="pc-tags"><span class="pc-tag">HTML</span><span class="pc-tag">CSS</span><span class="pc-tag">JavaScript</span></div>
-          <div class="pc-footer"><span class="pc-link"><i data-lucide="github" width="13" height="13"></i>GitHub'da Gör</span><span class="pc-status"><i data-lucide="zap" width="40" height="40" style="color:var(--gold);position:relative;z-index:1;"></i> Aktif</span></div>
-        </div>
-      </a>
-
-      <!-- ShopWise -->
-      <a class="project-card-new reveal d2" data-cat="web" href="https://github.com/aysenuursahin" target="_blank">
-        <div class="pc-poster" style="background:linear-gradient(135deg,#0d2818,#1b5e20,#0a3d14);">
-          <i data-lucide="shopping-bag" width="48" height="48" style="color:var(--teal);position:relative;z-index:1;"></i>
-          <div class="pc-poster-overlay"></div>
-          <span class="pc-poster-badge status done">✅ Tamamlandı</span>
-        </div>
-        <div class="pc-body">
-          <div class="pc-category"><i data-lucide="globe" width="11" height="11" style="display:inline;vertical-align:middle;margin-right:4px;"></i>Web · Frontend</div>
-          <div class="pc-title">ShopWise</div>
-          <div class="pc-desc">Ürün listeleme, favori ve sepet akışları içeren e-ticaret arayüz prototipi.</div>
-          <div class="pc-rating-row">
-            <div class="project-rating"><div class="stars-row"><span class="s f">★</span><span class="s f">★</span><span class="s f">★</span><span class="s f">★</span><span class="s f">★</span></div><span class="rate-val">5.0</span></div>
-            <div class="star-rating-interactive" data-key="shopwise-proj"><span class="star-i">★</span><span class="star-i">★</span><span class="star-i">★</span><span class="star-i">★</span><span class="star-i">★</span><span class="rating-label">Puan ver</span></div>
-          </div>
-          <div class="vote-row">
-            <button class="vote-btn" data-vote="like" data-project-id="6">👍 <span data-like-count>0</span></button>
-            <button class="vote-btn dislike" data-vote="dislike" data-project-id="6">👎 <span data-dislike-count>0</span></button>
-          </div>
-          <div class="pc-tags"><span class="pc-tag">HTML</span><span class="pc-tag">CSS</span><span class="pc-tag">JavaScript</span></div>
-          <div class="pc-footer"><span class="pc-link"><i data-lucide="github" width="13" height="13"></i>GitHub'da Gör</span><span class="pc-status">✅ Tamamlandı</span></div>
-        </div>
-      </a>
-
-      <!-- JavaHub API -->
-      <div class="project-card-new reveal d3" data-cat="java" style="opacity:.55;cursor:default;">
-        <div class="pc-poster" style="background:linear-gradient(135deg,#1c1c1c,#2d2d2d);">
-          <i data-lucide="coffee" width="48" height="48" style="color:var(--gold);position:relative;z-index:1;"></i>
-          <div class="pc-poster-overlay"></div>
-          <span class="pc-poster-badge status plan">🔵 Planlama</span>
-        </div>
-        <div class="pc-body">
-          <div class="pc-category"><i data-lucide="coffee" width="11" height="11" style="display:inline;vertical-align:middle;margin-right:4px;"></i>Java · Backend</div>
-          <div class="pc-title">JavaHub API</div>
-          <div class="pc-desc">REST prensipli backend servis katmanı ve rol tabanlı kimlik doğrulama. Yakında!</div>
-          <div class="pc-tags"><span class="pc-tag">Java</span><span class="pc-tag">Spring</span><span class="pc-tag">PostgreSQL</span></div>
-          <div class="pc-footer"><span class="pc-link" style="color:var(--muted)"><i data-lucide="clock" width="13" height="13"></i>Yakında</span><span class="pc-status">🔵 Planlama</span></div>
-        </div>
-      </div>
-
+    <!-- Boş durum -->
+    <div id="emptyMsg" style="display:none;text-align:center;padding:3rem 0;color:rgba(255,255,255,0.3);">
+      ⭐ Henüz favori eklemediniz.
     </div>
   </div>
 </section>
@@ -254,5 +178,204 @@
 <link rel="stylesheet" href="../assets/css/interactions.css">
 <script src="../assets/js/main.js"></script>
 <script src="../assets/js/interactions.js"></script>
+
+<script>
+  /* ============================================================
+     localStorage Favori Sistemi
+  ============================================================ */
+  const FavoriStore = {
+    KEY: 'as_favori_projeler',
+    tumunuAl() { try { return JSON.parse(localStorage.getItem(this.KEY)) || []; } catch { return []; } },
+    kaydet(l) { localStorage.setItem(this.KEY, JSON.stringify(l)); },
+    ekle(id)  { const l = this.tumunuAl(); if (!l.includes(id)) { l.push(id); this.kaydet(l); } },
+    cikar(id) { this.kaydet(this.tumunuAl().filter(x => x !== id)); },
+    varMi(id) { return this.tumunuAl().includes(id); },
+    temizle() { localStorage.removeItem(this.KEY); }
+  };
+
+  function favSayacGuncelle() {
+    const sayi = FavoriStore.tumunuAl().length;
+    document.getElementById('favSayi').textContent = sayi;
+    document.getElementById('fc-favori').textContent = sayi;
+    document.getElementById('favBar').style.display = sayi > 0 ? 'flex' : 'none';
+  }
+
+  /* ============================================================
+     Yıldız HTML
+  ============================================================ */
+  function yildizHTML(puan, key) {
+    if (puan === null) return '';
+    const dolu = Math.round(puan);
+    const yildizlar = [1,2,3,4,5].map(i =>
+      `<span class="s ${i <= dolu ? 'f' : ''}">★</span>`).join('');
+    return `
+      <div class="pc-rating-row">
+        <div class="project-rating"><div class="stars-row">${yildizlar}</div><span class="rate-val">${puan.toFixed(1)}</span></div>
+        <div class="star-rating-interactive" data-key="${key}">
+          <span class="star-i">★</span><span class="star-i">★</span><span class="star-i">★</span><span class="star-i">★</span><span class="star-i">★</span>
+          <span class="rating-label">Puan ver</span>
+        </div>
+      </div>`;
+  }
+
+  function oyHTML(projeId) {
+    if (!projeId) return '';
+    return `<div class="vote-row">
+      <button class="vote-btn" data-vote="like" data-project-id="${projeId}">👍 <span data-like-count>0</span></button>
+      <button class="vote-btn dislike" data-vote="dislike" data-project-id="${projeId}">👎 <span data-dislike-count>0</span></button>
+    </div>`;
+  }
+
+  /* ============================================================
+     Kart Oluşturucu
+  ============================================================ */
+  function kartOlustur(p) {
+    const isFav = FavoriStore.varMi(p.id);
+    const ozelBadge = p.ozelBadge ? `<span class="pc-poster-badge featured">${p.ozelBadge}</span>` : '';
+    const etiketHTML = p.etiketler.map(e => `<span class="pc-tag">${e}</span>`).join('');
+    const tag = p.githubUrl && !p.yakinda ? 'a' : 'div';
+    const href = p.githubUrl && !p.yakinda ? `href="${p.githubUrl}" ${p.githubUrl.startsWith('http') ? 'target="_blank"' : ''}` : '';
+    const opasite = p.yakinda ? 'style="opacity:.55;cursor:default;"' : '';
+
+    return `
+    <${tag} class="project-card-new reveal" data-cat="${p.kategori}" data-id="${p.id}" ${href} ${opasite}>
+      <div class="pc-poster" style="background:${p.poster};">
+        <i data-lucide="${p.posterIcon}" width="48" height="48" style="color:${p.posterIconColor};position:relative;z-index:1;"></i>
+        <div class="pc-poster-overlay"></div>
+        ${ozelBadge}
+        <span class="pc-poster-badge status ${p.durum === 'Tamamlandı' ? 'done' : p.durum === 'Planlama' ? 'plan' : 'active'}">${p.durumEmoji} ${p.durum}</span>
+      </div>
+      <div class="pc-body">
+        <div class="pc-category"><i data-lucide="${p.kategoriIcon}" width="11" height="11" style="display:inline;vertical-align:middle;margin-right:4px;"></i>${p.kategoriLabel}</div>
+        <div class="pc-title">${p.baslik}</div>
+        <div class="pc-desc">${p.aciklama}</div>
+        ${yildizHTML(p.puan, p.puanKey)}
+        ${oyHTML(p.projeId)}
+        <div class="pc-tags">${etiketHTML}</div>
+        <div class="pc-footer">
+          ${p.yakinda
+            ? '<span class="pc-link" style="color:var(--muted)"><i data-lucide="clock" width="13" height="13"></i>Yakında</span>'
+            : '<span class="pc-link"><i data-lucide="github" width="13" height="13"></i>GitHub\'da Gör</span>'
+          }
+          <span class="pc-status">${p.durumEmoji} ${p.durum}</span>
+          <button class="fav-btn ${isFav ? 'aktif' : ''}" data-proje-id="${p.id}" title="${isFav ? 'Favorilerden çıkar' : 'Favorilere ekle'}">
+            <span class="fav-star">${isFav ? '★' : '☆'}</span>
+            <span class="fav-label">${isFav ? 'Favoride' : 'Favori'}</span>
+          </button>
+        </div>
+      </div>
+    </${tag}>`;
+  }
+
+  /* ============================================================
+     Filtre
+  ============================================================ */
+  let aktifFiltre = 'all';
+
+  function filtrele() {
+    const kartlar = document.querySelectorAll('.project-card-new[data-id]');
+    const favIdler = FavoriStore.tumunuAl();
+    let gorunen = 0;
+    kartlar.forEach(k => {
+      const cat = k.dataset.cat || '';
+      const id = parseInt(k.dataset.id);
+      const goster = aktifFiltre === 'all' ? true
+                   : aktifFiltre === 'favori' ? favIdler.includes(id)
+                   : cat.includes(aktifFiltre);
+      k.style.display = goster ? '' : 'none';
+      if (goster) gorunen++;
+    });
+    document.getElementById('emptyMsg').style.display = gorunen === 0 ? 'block' : 'none';
+  }
+
+  /* ============================================================
+     JSON'dan Yükle & Başlat
+  ============================================================ */
+  async function projeleriYukle() {
+    let projeler;
+    try {
+      const res = await fetch('../data/projeler.json');
+      projeler = await res.json();
+    } catch(e) {
+      console.error('projeler.json yüklenemedi:', e);
+      return;
+    }
+
+    // Kartları çiz
+    document.getElementById('plist').innerHTML = projeler.map(kartOlustur).join('');
+
+    // Sayaçlar
+    document.getElementById('fc-all').textContent = projeler.length;
+    document.getElementById('fc-web').textContent = projeler.filter(p => p.kategori.includes('web')).length;
+    document.getElementById('fc-fullstack').textContent = projeler.filter(p => p.kategori.includes('fullstack')).length;
+    document.getElementById('fc-java').textContent = projeler.filter(p => p.kategori.includes('java')).length;
+    favSayacGuncelle();
+
+    // Lucide ikonları yeniden başlat
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+
+    // İlk yükleme filtresi uygula (display:none olacaklar belirlenir)
+    filtrele();
+
+    // main.js reveal observer kartlar eklenmeden önce çalıştığı için
+    // görünür kartlara doğrudan vis sınıfı ekliyoruz (sırayla, animasyonlu).
+    const kartEls = [...document.querySelectorAll('#plist .project-card-new')]
+      .filter(el => el.style.display !== 'none');
+    kartEls.forEach((el, i) => {
+      setTimeout(() => el.classList.add('vis'), 60 + i * 80);
+    });
+
+    // Favori buton olayları
+    document.querySelectorAll('.fav-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const id = parseInt(btn.dataset.projeId);
+        const aktif = FavoriStore.varMi(id);
+        if (aktif) {
+          FavoriStore.cikar(id);
+          btn.classList.remove('aktif');
+          btn.querySelector('.fav-star').textContent = '☆';
+          btn.querySelector('.fav-label').textContent = 'Favori';
+          btn.title = 'Favorilere ekle';
+        } else {
+          FavoriStore.ekle(id);
+          btn.classList.add('aktif');
+          btn.querySelector('.fav-star').textContent = '★';
+          btn.querySelector('.fav-label').textContent = 'Favoride';
+          btn.title = 'Favorilerden çıkar';
+        }
+        favSayacGuncelle();
+        if (aktifFiltre === 'favori') filtrele();
+      });
+    });
+
+    // Filtre butonları
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        aktifFiltre = btn.dataset.filter;
+        filtrele();
+      });
+    });
+
+    // Tümünü temizle
+    document.getElementById('favTemizle').addEventListener('click', () => {
+      FavoriStore.temizle();
+      document.querySelectorAll('.fav-btn').forEach(btn => {
+        btn.classList.remove('aktif');
+        btn.querySelector('.fav-star').textContent = '☆';
+        btn.querySelector('.fav-label').textContent = 'Favori';
+        btn.title = 'Favorilere ekle';
+      });
+      favSayacGuncelle();
+      if (aktifFiltre === 'favori') filtrele();
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', projeleriYukle);
+</script>
+
 </body>
 </html>
