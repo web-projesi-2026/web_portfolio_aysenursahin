@@ -13,6 +13,14 @@ if ($method === 'POST') {
     handleVote();
 }
 
+if ($method === 'PUT') {
+    handleUpdate();
+}
+
+if ($method === 'DELETE') {
+    handleDelete();
+}
+
 jsonResponse([
     'ok' => false,
     'message' => 'Geçersiz istek yöntemi.'
@@ -120,5 +128,46 @@ function handleVote(): void
             'ok' => false,
             'message' => 'Oy işlemi sırasında bir hata oluştu.'
         ], 500);
+    }
+}
+
+function handleUpdate(): void
+{
+    requireAdminSession();
+    $input = json_decode(file_get_contents('php://input'), true);
+    $id = (int)($input['id'] ?? 0);
+    if ($id < 1) jsonResponse(['ok' => false, 'message' => 'Geçersiz ID.'], 422);
+
+    $pdo = db();
+    $stmt = $pdo->prepare(
+        'UPDATE projects SET title=:title, category=:category, tech_stack=:tech_stack, status=:status, description=:description WHERE id=:id'
+    );
+    $stmt->execute([
+        ':title'      => sanitize($input['title'] ?? ''),
+        ':category'   => sanitize($input['category'] ?? ''),
+        ':tech_stack' => sanitize($input['tech_stack'] ?? ''),
+        ':status'     => sanitize($input['status'] ?? 'active'),
+        ':description'=> sanitize($input['description'] ?? ''),
+        ':id'         => $id,
+    ]);
+    jsonResponse(['ok' => true, 'message' => 'Proje güncellendi.']);
+}
+
+function handleDelete(): void
+{
+    requireAdminSession();
+    $input = json_decode(file_get_contents('php://input'), true);
+    $id = (int)($input['id'] ?? 0);
+    if ($id < 1) jsonResponse(['ok' => false, 'message' => 'Geçersiz ID.'], 422);
+
+    db()->prepare('DELETE FROM projects WHERE id = :id')->execute([':id' => $id]);
+    jsonResponse(['ok' => true, 'message' => 'Proje silindi.']);
+}
+
+function requireAdminSession(): void
+{
+    // Admin kontrolü: session veya basit token
+    if (empty($_SESSION['is_admin'])) {
+        jsonResponse(['ok' => false, 'message' => 'Yetkisiz erişim.'], 403);
     }
 }

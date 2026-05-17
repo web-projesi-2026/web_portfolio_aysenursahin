@@ -15,6 +15,7 @@
   <meta name="twitter:title" content="Projeler — Ayşenur Şahin">
   <meta name="twitter:description" content="Ayşenur Şahin'in geliştirdiği web, fullstack ve Java projeleri.">
   <title>Projeler — Ayşenur Şahin</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;1,9..144,300;1,9..144,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/css/style.css">
@@ -128,6 +129,20 @@
 
 <section class="projects-section">
   <div class="container">
+    <!-- Arama ve Sıralama Araç Çubuğu -->
+    <div class="search-sort-bar reveal" style="display:flex;gap:12px;margin-bottom:18px;flex-wrap:wrap;align-items:center;">
+      <div style="position:relative;flex:1;min-width:220px;">
+        <i data-lucide="search" width="15" height="15" style="position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none;"></i>
+        <input type="text" id="searchInput" placeholder="Proje ara..." style="width:100%;padding:10px 12px 10px 36px;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:inherit;font-size:.875rem;outline:none;box-sizing:border-box;transition:border-color .2s;" onfocus="this.style.borderColor='var(--accent)'" onblur="this.style.borderColor='var(--border)'">
+      </div>
+      <select id="sortSelect" style="padding:10px 14px;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);font-family:inherit;font-size:.875rem;outline:none;cursor:pointer;min-width:180px;">
+        <option value="default">Varsayılan Sıra</option>
+        <option value="name-asc">İsim A → Z</option>
+        <option value="name-desc">İsim Z → A</option>
+        <option value="tech">Teknoloji Sayısı</option>
+      </select>
+    </div>
+
     <div class="filter-bar reveal">
       <span class="filter-label">Filtrele:</span>
       <button class="filter-btn active" data-filter="all"><i data-lucide="layout-grid" width="13" height="13"></i>Tümü <span class="filter-count" id="fc-all">0</span></button>
@@ -268,68 +283,17 @@
   }
 
   /* ============================================================
-     Filtre
+     Filtre + Arama + Sıralama
   ============================================================ */
   let aktifFiltre = 'all';
+  let aktifArama = '';
+  let aktifSiralama = 'default';
+  let tumProjeler = [];
 
-  function filtrele() {
-    const kartlar = document.querySelectorAll('.project-card-new[data-id]');
-    const favIdler = FavoriStore.tumunuAl();
-    let gorunen = 0;
-    kartlar.forEach(k => {
-      const cat = k.dataset.cat || '';
-      const id = parseInt(k.dataset.id);
-      const goster = aktifFiltre === 'all' ? true
-                   : aktifFiltre === 'favori' ? favIdler.includes(id)
-                   : cat.includes(aktifFiltre);
-      k.style.display = goster ? '' : 'none';
-      if (goster) gorunen++;
-    });
-    document.getElementById('emptyMsg').style.display = gorunen === 0 ? 'block' : 'none';
-  }
-
-  /* ============================================================
-     JSON'dan Yükle & Başlat
-  ============================================================ */
-  async function projeleriYukle() {
-    let projeler;
-    try {
-      const res = await fetch('../data/projeler.json');
-      projeler = await res.json();
-    } catch(e) {
-      console.error('projeler.json yüklenemedi:', e);
-      return;
-    }
-
-    // Kartları çiz
-    document.getElementById('plist').innerHTML = projeler.map(kartOlustur).join('');
-
-    // Sayaçlar
-    document.getElementById('fc-all').textContent = projeler.length;
-    document.getElementById('fc-web').textContent = projeler.filter(p => p.kategori.includes('web')).length;
-    document.getElementById('fc-fullstack').textContent = projeler.filter(p => p.kategori.includes('fullstack')).length;
-    document.getElementById('fc-java').textContent = projeler.filter(p => p.kategori.includes('java')).length;
-    favSayacGuncelle();
-
-    // Lucide ikonları yeniden başlat
-    if (typeof lucide !== 'undefined') lucide.createIcons();
-
-    // İlk yükleme filtresi uygula (display:none olacaklar belirlenir)
-    filtrele();
-
-    // main.js reveal observer kartlar eklenmeden önce çalıştığı için
-    // görünür kartlara doğrudan vis sınıfı ekliyoruz (sırayla, animasyonlu).
-    const kartEls = [...document.querySelectorAll('#plist .project-card-new')]
-      .filter(el => el.style.display !== 'none');
-    kartEls.forEach((el, i) => {
-      setTimeout(() => el.classList.add('vis'), 60 + i * 80);
-    });
-
-    // Favori buton olayları
-    document.querySelectorAll('.fav-btn').forEach(btn => {
+  function favButonlarinaOlayEkle() {
+    document.getElementById('plist').querySelectorAll('.fav-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        e.stopPropagation();
+        e.preventDefault(); e.stopPropagation();
         const id = parseInt(btn.dataset.projeId);
         const aktif = FavoriStore.varMi(id);
         if (aktif) {
@@ -337,17 +301,83 @@
           btn.classList.remove('aktif');
           btn.querySelector('.fav-star').textContent = '☆';
           btn.querySelector('.fav-label').textContent = 'Favori';
-          btn.title = 'Favorilere ekle';
         } else {
           FavoriStore.ekle(id);
           btn.classList.add('aktif');
           btn.querySelector('.fav-star').textContent = '★';
           btn.querySelector('.fav-label').textContent = 'Favoride';
-          btn.title = 'Favorilerden çıkar';
         }
         favSayacGuncelle();
-        if (aktifFiltre === 'favori') filtrele();
+        if (aktifFiltre === 'favori') filtreleVeSirala();
       });
+    });
+  }
+
+  function filtreleVeSirala() {
+    const plist = document.getElementById('plist');
+    const favIdler = FavoriStore.tumunuAl();
+    const aranan = aktifArama.toLowerCase().trim();
+
+    let sonuc = tumProjeler.filter(p => {
+      const katMatch = aktifFiltre === 'all' ? true
+                     : aktifFiltre === 'favori' ? favIdler.includes(p.id)
+                     : p.kategori.includes(aktifFiltre);
+      const araMatch = aranan === '' ? true
+                     : p.baslik.toLowerCase().includes(aranan)
+                     || p.aciklama.toLowerCase().includes(aranan)
+                     || p.etiketler.some(e => e.toLowerCase().includes(aranan));
+      return katMatch && araMatch;
+    });
+
+    if (aktifSiralama === 'name-asc') {
+      sonuc.sort((a, b) => a.baslik.localeCompare(b.baslik, 'tr'));
+    } else if (aktifSiralama === 'name-desc') {
+      sonuc.sort((a, b) => b.baslik.localeCompare(a.baslik, 'tr'));
+    } else if (aktifSiralama === 'tech') {
+      sonuc.sort((a, b) => b.etiketler.length - a.etiketler.length);
+    }
+
+    plist.innerHTML = sonuc.map(kartOlustur).join('');
+    if (typeof lucide !== 'undefined') lucide.createIcons();
+    favButonlarinaOlayEkle();
+    [...plist.querySelectorAll('.project-card-new')].forEach((el, i) => setTimeout(() => el.classList.add('vis'), 60 + i * 80));
+    document.getElementById('emptyMsg').style.display = sonuc.length === 0 ? 'block' : 'none';
+  }
+
+  // Geriye dönük uyumluluk
+  function filtrele() { filtreleVeSirala(); }
+
+  /* ============================================================
+     JSON'dan Yükle & Başlat
+  ============================================================ */
+  async function projeleriYukle() {
+    try {
+      const res = await fetch('../data/projeler.json');
+      tumProjeler = await res.json();
+    } catch(e) {
+      console.error('projeler.json yüklenemedi:', e);
+      return;
+    }
+
+    // Sayaçlar
+    document.getElementById('fc-all').textContent = tumProjeler.length;
+    document.getElementById('fc-web').textContent = tumProjeler.filter(p => p.kategori.includes('web')).length;
+    document.getElementById('fc-fullstack').textContent = tumProjeler.filter(p => p.kategori.includes('fullstack')).length;
+    document.getElementById('fc-java').textContent = tumProjeler.filter(p => p.kategori.includes('java')).length;
+    favSayacGuncelle();
+
+    filtreleVeSirala();
+
+    // Arama kutusu
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+      aktifArama = e.target.value;
+      filtreleVeSirala();
+    });
+
+    // Sıralama
+    document.getElementById('sortSelect').addEventListener('change', (e) => {
+      aktifSiralama = e.target.value;
+      filtreleVeSirala();
     });
 
     // Filtre butonları
@@ -356,21 +386,15 @@
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         aktifFiltre = btn.dataset.filter;
-        filtrele();
+        filtreleVeSirala();
       });
     });
 
     // Tümünü temizle
     document.getElementById('favTemizle').addEventListener('click', () => {
       FavoriStore.temizle();
-      document.querySelectorAll('.fav-btn').forEach(btn => {
-        btn.classList.remove('aktif');
-        btn.querySelector('.fav-star').textContent = '☆';
-        btn.querySelector('.fav-label').textContent = 'Favori';
-        btn.title = 'Favorilere ekle';
-      });
       favSayacGuncelle();
-      if (aktifFiltre === 'favori') filtrele();
+      filtreleVeSirala();
     });
   }
 

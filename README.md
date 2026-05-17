@@ -2,41 +2,46 @@
 
 ## Proje Açıklaması
 
-Ayşenur Şahin'in kişisel portfolyo sitesi. Yazılım geliştirici kimliğini yansıtan, modern ve animasyonlu bir web uygulamasıdır. Hem statik ön yüz sayfalarını hem de PHP + MySQL tabanlı bir backend API'sini barındırır.
+Ayşenur Şahin'in kişisel portfolyo sitesi. Modern ve animasyonlu bir web uygulamasıdır. Hem statik ön yüz sayfalarını hem de PHP + MySQL tabanlı bir backend API'sini barındırır.
 
 ---
 
-## Hedef Kullanıcı
+## Yeni Eklenen Özellikler (Final)
 
-- **Ziyaretçiler:** Portfolyoyu inceleyen işverenler, iş ortakları ve meraklı kullanıcılar.
-- **Mesaj Gönderenler:** İletişim formu üzerinden proje iş birliği veya geri bildirim göndermek isteyenler.
-- **Admin (Site Sahibi):** Proje ve mesaj yönetimi için admin paneline erişen Ayşenur Şahin.
+### 1. Kullanıcı Deneyimi
+- 🔍 **Arama kutusu** — Projeler sayfasında anlık arama (ad, açıklama, teknoloji)
+- 🔃 **Sıralama** — İsim A→Z, Z→A ve teknoloji sayısına göre
+- 🏷️ **Kategori filtreleme** — Tümü / Web / Full Stack / Java / Favoriler
 
----
+### 2. Harici API
+- 💱 **Canlı Döviz Kurları** — `open.er-api.com` API'si ile USD, EUR, GBP, JPY, SAR ana sayfada
 
-## Temel Özellikler
+### 3. Veritabanı İşlemleri
+- ✅ Kullanıcı kayıt & giriş (PHP session)
+- ✅ İletişim formu mesajı ekleme
+- ✅ Projeleri veritabanından listeleme
+- ✅ Proje güncelleme (PUT endpoint)
+- ✅ Proje silme (DELETE endpoint)
+- ✅ Admin panelinde tam CRUD
 
-- 🎨 Karanlık temalı, modern ve animasyonlu tasarım (scroll reveal, orb efektleri, grain texture)
-- 📄 Hakkında, Projeler, Blog ve İletişim sayfaları
-- 💬 İletişim formu (PHP + MySQL backend ile mesaj kaydı)
-- 🔐 Kullanıcı kayıt / giriş sistemi (session tabanlı PHP auth)
-- 👑 Admin girişi (localStorage tabanlı, ayrı modal)
-- 📊 Admin paneli (proje listesi, istatistikler)
-- 👍 Proje beğeni / beğenmeme sistemi (IP + User-Agent tabanlı, tekrar oy önleme)
-- 📱 Tam responsive tasarım (mobil menü, hamburger)
-- ⭐ Blog yazılarına puan verme
+### 4. Profesyonelleştirme
+- 🔖 Tüm sayfalara `favicon.svg` eklendi
+- 📝 Tüm `<title>` etiketleri eksiksiz
+- 🧹 Kod tekrarları azaltıldı
+- 🔗 Kırık linkler düzeltildi
 
 ---
 
 ## Kullanılan Teknolojiler
 
 | Katman     | Teknoloji                          |
-|------------|------------------------------------|
-| Frontend   | HTML5, CSS3, Vanilla JavaScript    |
-| Fontlar    | Outfit, Fraunces, JetBrains Mono   |
-| İkonlar    | Lucide Icons (CDN)                 |
-| Backend    | PHP 8+                             |
-| Veritabanı | MySQL 5.7+ / 8.0+ (PDO)           |
+|------------|-------------------------------------|
+| Frontend   | HTML5, CSS3, Vanilla JavaScript     |
+| Fontlar    | Outfit, Fraunces, JetBrains Mono    |
+| İkonlar    | Lucide Icons (CDN)                  |
+| Backend    | PHP 8+                              |
+| Veritabanı | MySQL 5.7+ / 8.0+ (PDO)            |
+| Harici API | open.er-api.com (döviz kurları)     |
 
 ---
 
@@ -46,88 +51,43 @@ Ayşenur Şahin'in kişisel portfolyo sitesi. Yazılım geliştirici kimliğini 
 portfolio/
 ├── index.html               # Ana sayfa
 ├── README.md
-│
 ├── assets/
+│   ├── favicon.svg
 │   ├── css/
-│   │   ├── style.css        # Ana stil dosyası
-│   │   └── responsive.css   # Responsive overrides
+│   │   ├── style.css
+│   │   ├── responsive.css
+│   │   └── interactions.css
 │   └── js/
-│       └── main.js          # Sayfa etkileşimleri, animasyonlar
-│
-├── backend/
-│   └── php/
-│       ├── config.php       # DB bağlantısı, yardımcı fonksiyonlar, seed
-│       ├── auth.php         # Kayıt / giriş / çıkış API
-│       ├── contact.php      # İletişim formu API
-│       └── projects.php     # Proje listesi + oy API
-│
+│       ├── main.js
+│       └── interactions.js
+├── backend/php/
+│   ├── config.php
+│   ├── auth.php
+│   ├── contact.php
+│   └── projects.php         # GET/POST/PUT/DELETE
+├── data/
+│   └── projeler.json
 └── pages/
-    ├── about.html           # Hakkında
-    ├── admin.html           # Admin paneli
-    ├── blog.html            # Blog
-    ├── contact.html         # İletişim
-    ├── login.html           # Giriş
-    ├── projeler.html        # Projeler
-    └── register.html        # Kayıt
+    ├── about.html
+    ├── admin.html            # Proje CRUD paneli
+    ├── blog.html
+    ├── contact.html
+    ├── login.html
+    ├── projeler.html         # Arama + filtre + sıralama
+    └── register.html
 ```
 
 ---
 
 ## Kurulum
 
-### Gereksinimler
-- PHP 8.0+
-- MySQL 5.7+ veya 8.0+
-- XAMPP (veya herhangi bir Apache + MySQL ortamı)
+1. XAMPP'ta Apache ve MySQL başlatın
+2. `phpMyAdmin` → Yeni veritabanı: `portfolio_db`
+3. `backend/php/config.php` içine DB bilgilerini girin
+4. Dosyaları `C:\xampp\htdocs\portfolio\` altına kopyalayın
+5. `http://localhost/portfolio/` adresini açın (tablolar otomatik oluşur)
 
-### Adımlar
-
-1. **XAMPP'ı başlatın:**
-   Apache ve MySQL servislerini açın.
-
-2. **phpMyAdmin'de veritabanını oluşturun:**
-   - `http://localhost/phpmyadmin` adresine gidin.
-   - Sol üstten **Yeni** (New) butonuna tıklayın.
-   - Veritabanı adı: `portfolio_db`
-   - Karakter seti: `utf8mb4_unicode_ci`
-   - **Oluştur** butonuna tıklayın.
-
-3. **`backend/php/config.php` dosyasını açın ve bağlantı bilgilerini girin:**
-   ```php
-   define('DB_HOST', 'localhost');     // Genellikle localhost
-   define('DB_NAME', 'portfolio_db'); // Oluşturduğunuz veritabanı adı
-   define('DB_USER', 'root');          // MySQL kullanıcı adı
-   define('DB_PASS', '');              // MySQL şifresi (XAMPP'ta varsayılan boş)
-   ```
-
-4. **Proje dosyalarını XAMPP klasörüne kopyalayın:**
-   ```
-   C:\xampp\htdocs\portfolio\
-   ```
-
-5. **Tarayıcıdan açın:**
-   ```
-   http://localhost/portfolio/
-   ```
-   İlk açılışta tablolar ve örnek projeler otomatik oluşturulur, elle SQL çalıştırmanıza gerek yoktur.
-
-6. **Admin girişi:**
-   - Giriş sayfasındaki **🔐 Admin Girişi** butonuna tıklayın.
-   - Kullanıcı adı: `aysenur`
-   - Şifre: `aysenur123`
-
----
-
-## Veritabanı Tabloları
-
-Tablolar ilk çalıştırmada `config.php` içindeki `initializeDatabase()` fonksiyonu tarafından otomatik oluşturulur.
-
-| Tablo           | Açıklama                                      |
-|-----------------|-----------------------------------------------|
-| `users`         | Kayıtlı kullanıcılar                          |
-| `messages`      | İletişim formundan gelen mesajlar             |
-| `projects`      | Proje listesi ve beğeni sayaçları             |
-| `project_votes` | Tekrar oy önleme (IP + User-Agent bazlı)      |
+**Admin:** Giriş sayfası → 🔐 Admin Girişi → `aysenur` / `aysenur123`
 
 ---
 
