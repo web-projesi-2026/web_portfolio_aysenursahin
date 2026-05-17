@@ -15,6 +15,7 @@
   <meta name="twitter:title" content="Admin Paneli — Ayşenur Şahin">
   <meta name="twitter:description" content="Yönetim paneli.">
   <title>Admin Paneli — Ayşenur Şahin</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=DM+Serif+Display:ital@0;1&family=Outfit:wght@700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/css/style.css">
@@ -77,30 +78,229 @@
 
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px;">
       <h3 style="font-size:1rem;font-weight:600;margin-bottom:16px;">Son Projeler</h3>
-      <table class="admin-table">
+      <!-- Yeni Proje Ekle -->
+      <div style="margin-bottom:18px;">
+        <button id="btnYeniProje" style="padding:9px 18px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-family:inherit;font-size:.85rem;cursor:pointer;display:flex;align-items:center;gap:6px;">
+          <i data-lucide="plus" width="14" height="14"></i> Yeni Proje Ekle
+        </button>
+      </div>
+
+      <!-- Yeni Proje Formu (gizli) -->
+      <div id="yeniProjeForm" style="display:none;background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:20px;">
+        <h4 style="margin-bottom:14px;font-size:.95rem;">Yeni Proje</h4>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+          <input id="np_baslik" placeholder="Proje Adı *" style="padding:9px 12px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit;font-size:.85rem;">
+          <select id="np_kategori" style="padding:9px 12px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit;font-size:.85rem;">
+            <option value="web">Web</option>
+            <option value="fullstack">Full Stack</option>
+            <option value="java">Java</option>
+          </select>
+          <input id="np_teknoloji" placeholder="Teknolojiler (virgülle ayır) *" style="padding:9px 12px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit;font-size:.85rem;">
+          <select id="np_durum" style="padding:9px 12px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit;font-size:.85rem;">
+            <option value="Aktif">Aktif</option>
+            <option value="Tamamlandı">Tamamlandı</option>
+            <option value="Geliştirme">Geliştirme</option>
+            <option value="Planlama">Planlama</option>
+          </select>
+          <input id="np_aciklama" placeholder="Açıklama *" style="padding:9px 12px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit;font-size:.85rem;grid-column:span 2;">
+        </div>
+        <div style="margin-top:12px;display:flex;gap:8px;">
+          <button id="btnProjeKaydet" style="padding:8px 18px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-family:inherit;font-size:.85rem;cursor:pointer;">Kaydet</button>
+          <button id="btnProjeIptal" style="padding:8px 18px;background:var(--surface);color:var(--muted);border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:.85rem;cursor:pointer;">İptal</button>
+        </div>
+        <p id="np_mesaj" style="margin-top:8px;font-size:.8rem;color:var(--accent);display:none;"></p>
+      </div>
+
+      <table class="admin-table" id="adminProjeTablosu">
         <thead>
           <tr>
             <th>Proje</th>
             <th>Kategori</th>
             <th>Durum</th>
             <th>Teknolojiler</th>
+            <th style="text-align:center;">İşlem</th>
           </tr>
         </thead>
-        <tbody>
-          <tr><td>CineTrack</td><td style="font-family:var(--ff-mono);font-size:.78rem;color:var(--muted);">fullstack</td><td><span style="color:var(--gold);">● Geliştirme</span></td><td style="font-family:var(--ff-mono);font-size:.78rem;color:var(--muted);">PHP, JS, MySQL</td></tr>
-          <tr><td>Portfolyo Sitesi</td><td style="font-family:var(--ff-mono);font-size:.78rem;color:var(--muted);">web</td><td><span style="color:var(--green);">● Tamamlandı</span></td><td style="font-family:var(--ff-mono);font-size:.78rem;color:var(--muted);">HTML, CSS, JS</td></tr>
-          <tr><td>TaskFlow</td><td style="font-family:var(--ff-mono);font-size:.78rem;color:var(--muted);">fullstack</td><td><span style="color:var(--gold);">● Aktif</span></td><td style="font-family:var(--ff-mono);font-size:.78rem;color:var(--muted);">PHP, JS, SQLite</td></tr>
-          <tr><td>NoteSphere</td><td style="font-family:var(--ff-mono);font-size:.78rem;color:var(--muted);">web</td><td><span style="color:var(--gold);">● Aktif</span></td><td style="font-family:var(--ff-mono);font-size:.78rem;color:var(--muted);">HTML, CSS, JS</td></tr>
-          <tr><td>ShopWise</td><td style="font-family:var(--ff-mono);font-size:.78rem;color:var(--muted);">web</td><td><span style="color:var(--green);">● Tamamlandı</span></td><td style="font-family:var(--ff-mono);font-size:.78rem;color:var(--muted);">HTML, CSS, JS</td></tr>
-          <tr><td>JavaHub API</td><td style="font-family:var(--ff-mono);font-size:.78rem;color:var(--muted);">java</td><td><span style="color:var(--blue);">● Planlama</span></td><td style="font-family:var(--ff-mono);font-size:.78rem;color:var(--muted);">Java, Spring</td></tr>
+        <tbody id="adminProjeTbody">
+          <!-- JS ile doldurulur -->
         </tbody>
       </table>
     </div>
   </main>
 </div>
 
+<!-- Düzenleme Modalı -->
+<div id="duzenleModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;align-items:center;justify-content:center;">
+  <div style="background:var(--bg);border:1px solid var(--border);border-radius:16px;padding:28px;width:90%;max-width:500px;">
+    <h3 style="margin-bottom:16px;font-size:1rem;">Projeyi Düzenle</h3>
+    <input type="hidden" id="dp_id">
+    <div style="display:grid;gap:10px;">
+      <input id="dp_baslik" placeholder="Proje Adı" style="padding:9px 12px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit;font-size:.85rem;">
+      <select id="dp_kategori" style="padding:9px 12px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit;font-size:.85rem;">
+        <option value="web">Web</option>
+        <option value="fullstack">Full Stack</option>
+        <option value="java">Java</option>
+      </select>
+      <input id="dp_teknoloji" placeholder="Teknolojiler" style="padding:9px 12px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit;font-size:.85rem;">
+      <select id="dp_durum" style="padding:9px 12px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit;font-size:.85rem;">
+        <option value="Aktif">Aktif</option>
+        <option value="Tamamlandı">Tamamlandı</option>
+        <option value="Geliştirme">Geliştirme</option>
+        <option value="Planlama">Planlama</option>
+      </select>
+      <input id="dp_aciklama" placeholder="Açıklama" style="padding:9px 12px;background:var(--surface);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit;font-size:.85rem;">
+    </div>
+    <div style="margin-top:14px;display:flex;gap:8px;">
+      <button id="btnDuzenleKaydet" style="padding:8px 18px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-family:inherit;font-size:.85rem;cursor:pointer;">Güncelle</button>
+      <button id="btnDuzenleIptal" style="padding:8px 18px;background:var(--surface);color:var(--muted);border:1px solid var(--border);border-radius:8px;font-family:inherit;font-size:.85rem;cursor:pointer;">İptal</button>
+    </div>
+  </div>
+</div>
+
 <link rel="stylesheet" href="../assets/css/interactions.css">
 <script src="../assets/js/main.js"></script>
 <script src="../assets/js/interactions.js"></script>
+<script>
+/* ============================================================
+   Admin Panel — Proje Yönetimi (localStorage tabanlı)
+   Gerçek projede backend/php/projects.php ile bağlanılır.
+============================================================ */
+const ADMIN_KEY = 'as_admin_projeler';
+
+function adminProjeleriAl() {
+  // JSON verisini temel al, localStorage üzerine yaz
+  const stored = localStorage.getItem(ADMIN_KEY);
+  if (stored) return JSON.parse(stored);
+  // İlk yükleme: projeler.json'dan çek
+  return null;
+}
+
+function adminProjeleriKaydet(projeler) {
+  localStorage.setItem(ADMIN_KEY, JSON.stringify(projeler));
+}
+
+function durumRenk(durum) {
+  if (durum === 'Tamamlandı') return 'var(--green)';
+  if (durum === 'Planlama') return 'var(--blue)';
+  return 'var(--gold)';
+}
+
+function tabloYenile(projeler) {
+  const tbody = document.getElementById('adminProjeTbody');
+  tbody.innerHTML = projeler.map((p, i) => `
+    <tr data-idx="${i}">
+      <td style="font-weight:600;">${p.baslik}</td>
+      <td style="font-family:var(--ff-mono);font-size:.78rem;color:var(--muted);">${p.kategori}</td>
+      <td><span style="color:${durumRenk(p.durum)};">● ${p.durum}</span></td>
+      <td style="font-family:var(--ff-mono);font-size:.78rem;color:var(--muted);">${p.teknoloji}</td>
+      <td style="text-align:center;display:flex;gap:6px;justify-content:center;">
+        <button onclick="duzenleAc(${i})" style="padding:4px 10px;background:rgba(168,85,247,.12);border:1px solid rgba(168,85,247,.3);border-radius:6px;color:var(--accent);font-size:.78rem;font-family:inherit;cursor:pointer;">Düzenle</button>
+        <button onclick="projeSil(${i})" style="padding:4px 10px;background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);border-radius:6px;color:#ef4444;font-size:.78rem;font-family:inherit;cursor:pointer;">Sil</button>
+      </td>
+    </tr>`).join('');
+
+  // İstatistik güncelle
+  document.querySelector('.admin-stat-card:first-child .admin-stat-card-val').textContent = projeler.length;
+  if (typeof lucide !== 'undefined') lucide.createIcons();
+}
+
+let projeler = [];
+
+async function adminBaslat() {
+  const stored = adminProjeleriAl();
+  if (stored) {
+    projeler = stored;
+  } else {
+    try {
+      const res = await fetch('../data/projeler.json');
+      const json = await res.json();
+      projeler = json.map(p => ({
+        baslik: p.baslik,
+        kategori: p.kategori,
+        teknoloji: p.etiketler.join(', '),
+        durum: p.durum,
+        aciklama: p.aciklama
+      }));
+      adminProjeleriKaydet(projeler);
+    } catch(e) {
+      projeler = [];
+    }
+  }
+  tabloYenile(projeler);
+}
+
+function projeSil(i) {
+  if (!confirm(`"${projeler[i].baslik}" silinsin mi?`)) return;
+  projeler.splice(i, 1);
+  adminProjeleriKaydet(projeler);
+  tabloYenile(projeler);
+}
+
+function duzenleAc(i) {
+  const p = projeler[i];
+  document.getElementById('dp_id').value = i;
+  document.getElementById('dp_baslik').value = p.baslik;
+  document.getElementById('dp_kategori').value = p.kategori;
+  document.getElementById('dp_teknoloji').value = p.teknoloji;
+  document.getElementById('dp_durum').value = p.durum;
+  document.getElementById('dp_aciklama').value = p.aciklama || '';
+  document.getElementById('duzenleModal').style.display = 'flex';
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  adminBaslat();
+
+  // Yeni proje toggle
+  document.getElementById('btnYeniProje').addEventListener('click', () => {
+    const form = document.getElementById('yeniProjeForm');
+    form.style.display = form.style.display === 'none' ? 'block' : 'none';
+  });
+  document.getElementById('btnProjeIptal').addEventListener('click', () => {
+    document.getElementById('yeniProjeForm').style.display = 'none';
+  });
+
+  // Yeni proje kaydet
+  document.getElementById('btnProjeKaydet').addEventListener('click', () => {
+    const baslik = document.getElementById('np_baslik').value.trim();
+    const aciklama = document.getElementById('np_aciklama').value.trim();
+    const teknoloji = document.getElementById('np_teknoloji').value.trim();
+    if (!baslik || !aciklama || !teknoloji) {
+      const msg = document.getElementById('np_mesaj');
+      msg.textContent = 'Lütfen zorunlu alanları doldurun.';
+      msg.style.display = 'block'; msg.style.color = '#ef4444';
+      return;
+    }
+    projeler.unshift({
+      baslik,
+      kategori: document.getElementById('np_kategori').value,
+      teknoloji,
+      durum: document.getElementById('np_durum').value,
+      aciklama
+    });
+    adminProjeleriKaydet(projeler);
+    tabloYenile(projeler);
+    document.getElementById('yeniProjeForm').style.display = 'none';
+    ['np_baslik','np_aciklama','np_teknoloji'].forEach(id => document.getElementById(id).value = '');
+  });
+
+  // Düzenleme kaydet
+  document.getElementById('btnDuzenleKaydet').addEventListener('click', () => {
+    const i = parseInt(document.getElementById('dp_id').value);
+    projeler[i] = {
+      baslik: document.getElementById('dp_baslik').value.trim(),
+      kategori: document.getElementById('dp_kategori').value,
+      teknoloji: document.getElementById('dp_teknoloji').value.trim(),
+      durum: document.getElementById('dp_durum').value,
+      aciklama: document.getElementById('dp_aciklama').value.trim()
+    };
+    adminProjeleriKaydet(projeler);
+    tabloYenile(projeler);
+    document.getElementById('duzenleModal').style.display = 'none';
+  });
+  document.getElementById('btnDuzenleIptal').addEventListener('click', () => {
+    document.getElementById('duzenleModal').style.display = 'none';
+  });
+});
+</script>
 </body>
 </html>
