@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Ayşenur Şahin — Yazılım Geliştirici</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <meta name="robots" content="index, follow">
   <meta name="keywords" content="Ayşenur Şahin, web geliştirici, Java, PHP, JavaScript, portfolyo">
   <link rel="canonical" href="https://aysenuursahin.github.io/portfolio/index.html">
@@ -264,6 +265,48 @@
     </div>
   </div>
 </section>
+
+
+<!-- DÖVİZ KURU WIDGET (Harici API: open.er-api.com) -->
+<section class="section-currency" style="padding:40px 0;">
+  <div class="container">
+    <div class="section-divider reveal">
+      <span class="section-divider-label">Canlı Döviz</span>
+      <span class="section-divider-line"></span>
+    </div>
+    <h2 class="reveal d1" style="font-size:1.4rem;margin-bottom:20px;">Güncel <em>Döviz Kurları</em></h2>
+    <div id="kurlarGrid" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:8px;">
+      <div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px;text-align:center;">
+        <div style="font-family:var(--ff-mono);font-size:.72rem;color:var(--muted);margin-bottom:6px;">Yükleniyor...</div>
+      </div>
+    </div>
+    <p id="kurGuncelleme" style="font-size:.72rem;color:var(--muted);font-family:var(--ff-mono);text-align:right;margin-top:4px;"></p>
+  </div>
+</section>
+
+<script>
+(async function yukleKurlar() {
+  const kurlarGrid = document.getElementById('kurlarGrid');
+  const kurGuncelleme = document.getElementById('kurGuncelleme');
+  const kurlar = ['USD', 'EUR', 'GBP', 'JPY', 'SAR'];
+  try {
+    const res = await fetch('https://open.er-api.com/v6/latest/TRY');
+    const data = await res.json();
+    if (data.result !== 'success') throw new Error('API hatası');
+    const rates = data.rates;
+    kurlarGrid.innerHTML = kurlar.map(k => {
+      const deger = rates[k] ? (1 / rates[k]).toFixed(4) : '-';
+      return `<div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px;text-align:center;">
+        <div style="font-family:var(--ff-mono);font-size:.72rem;color:var(--muted);margin-bottom:6px;">${k}/TRY</div>
+        <div style="font-size:1.3rem;font-weight:700;color:var(--accent);">${deger}</div>
+      </div>`;
+    }).join('');
+    kurGuncelleme.textContent = 'Son güncelleme: ' + new Date().toLocaleString('tr-TR', {timeZone: 'Europe/Istanbul'});
+  } catch(e) {
+    kurlarGrid.innerHTML = '<p style="color:var(--muted);font-size:.85rem;">Kur verileri yüklenemedi.</p>';
+  }
+})();
+</script>
 
 <!-- CTA -->
 <section class="section-cta">
